@@ -1,0 +1,1989 @@
+Program.Sub.ScreenSU.Start
+Gui.F_InventoryExport..Create
+Gui.F_InventoryExport..Size(17865,12705)
+Gui.F_InventoryExport..MinX(0)
+Gui.F_InventoryExport..MinY(0)
+Gui.F_InventoryExport..Position(0,0)
+Gui.F_InventoryExport..BackColor(-2147483633)
+Gui.F_InventoryExport..MousePointer(0)
+Gui.F_InventoryExport..Caption("Inventory Export for Nesting")
+Gui.F_InventoryExport..Event(UnLoad,F_InventoryExport_UnLoad)
+Gui.F_InventoryExport.frmFieldTitles.Create(Frame)
+Gui.F_InventoryExport.frmFieldTitles.Size(5745,2505)
+Gui.F_InventoryExport.frmFieldTitles.Position(90,2355)
+Gui.F_InventoryExport.frmFieldTitles.Caption("Field Mapping")
+Gui.F_InventoryExport.cmdUploadFieldTitles.Create(Button)
+Gui.F_InventoryExport.cmdUploadFieldTitles.Size(5580,375)
+Gui.F_InventoryExport.cmdUploadFieldTitles.Position(105,1965)
+Gui.F_InventoryExport.cmdUploadFieldTitles.Parent("frmFieldTitles")
+Gui.F_InventoryExport.cmdUploadFieldTitles.Caption("Upload Field Titles")
+Gui.F_InventoryExport.cmdUploadFieldTitles.Event(Click,cmdUploadFieldTitles_Click)
+Gui.F_InventoryExport.optCST.Create(Option)
+Gui.F_InventoryExport.optCST.Size(2775,255)
+Gui.F_InventoryExport.optCST.Position(75,1635)
+Gui.F_InventoryExport.optCST.Parent("frmFieldTitles")
+Gui.F_InventoryExport.optCST.Caption("Comma Separated Text")
+Gui.F_InventoryExport.optUNC.Create(Option)
+Gui.F_InventoryExport.optUNC.Size(2775,255)
+Gui.F_InventoryExport.optUNC.Position(2895,1635)
+Gui.F_InventoryExport.optUNC.Parent("frmFieldTitles")
+Gui.F_InventoryExport.optUNC.Caption("UNC Path (CSV)")
+Gui.F_InventoryExport.txtFieldTitles.Create(TextboxM)
+Gui.F_InventoryExport.txtFieldTitles.Size(5535,1335)
+Gui.F_InventoryExport.txtFieldTitles.Position(105,255)
+Gui.F_InventoryExport.txtFieldTitles.Parent("frmFieldTitles")
+Gui.F_InventoryExport.frmExportSettings.Create(Frame)
+Gui.F_InventoryExport.frmExportSettings.Size(5745,5385)
+Gui.F_InventoryExport.frmExportSettings.Position(150,4950)
+Gui.F_InventoryExport.frmExportSettings.Caption("Export Settings")
+Gui.F_InventoryExport.chkExportFieldNames.Create(CheckBox)
+Gui.F_InventoryExport.chkExportFieldNames.Size(1875,360)
+Gui.F_InventoryExport.chkExportFieldNames.Position(3510,3375)
+Gui.F_InventoryExport.chkExportFieldNames.Parent("frmExportSettings")
+Gui.F_InventoryExport.chkExportFieldNames.Caption("Export Field Names")
+Gui.F_InventoryExport.GsGcProductLines.Create(GsGridControl)
+Gui.F_InventoryExport.GsGcProductLines.Size(2640,2430)
+Gui.F_InventoryExport.GsGcProductLines.Position(75,570)
+Gui.F_InventoryExport.GsGcProductLines.Parent("frmExportSettings")
+Gui.F_InventoryExport.lbl2.Create(Label,"Product Lines",True,1530,255,0,105,315,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl2.Parent("frmExportSettings")
+Gui.F_InventoryExport.lbl3.Create(Label,"Code Sort",True,990,255,0,90,3135,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl3.Parent("frmExportSettings")
+Gui.F_InventoryExport.txtCodeSort.Create(TextboxM)
+Gui.F_InventoryExport.txtCodeSort.Size(3225,1110)
+Gui.F_InventoryExport.txtCodeSort.Position(75,3390)
+Gui.F_InventoryExport.txtCodeSort.Parent("frmExportSettings")
+Gui.F_InventoryExport.txtCodeSort.ToolTip("Please Input a string separated by commas.")
+Gui.F_InventoryExport.cmdEnableExpCol.Create(Button)
+Gui.F_InventoryExport.cmdEnableExpCol.Size(3150,375)
+Gui.F_InventoryExport.cmdEnableExpCol.Position(135,4920)
+Gui.F_InventoryExport.cmdEnableExpCol.Caption("Activate Expression Column")
+Gui.F_InventoryExport.cmdEnableExpCol.Parent("frmExportSettings")
+Gui.F_InventoryExport.cmdEnableExpCol.Event(Click,cmdEnableExpCol_Click)
+Gui.F_InventoryExport.lbl16.Create(Label,"Units of Measure",True,1530,255,0,3090,315,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl16.Parent("frmExportSettings")
+Gui.F_InventoryExport.GsGcUM.Create(GsGridControl)
+Gui.F_InventoryExport.GsGcUM.Size(2640,2430)
+Gui.F_InventoryExport.GsGcUM.Position(3030,570)
+Gui.F_InventoryExport.GsGcUM.Parent("frmExportSettings")
+Gui.F_InventoryExport.txtEC1.Create(TextBox,"",True,540,300,0,525,4575,False,2,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtEC1.Parent("frmExportSettings")
+Gui.F_InventoryExport.txtEC1.NumericOnly(2)
+Gui.F_InventoryExport.txtEC2.Create(TextBox,"",True,540,300,0,1605,4575,False,2,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtEC2.Parent("frmExportSettings")
+Gui.F_InventoryExport.txtEC2.NumericOnly(2)
+Gui.F_InventoryExport.lbl17.Create(Label,"EC1",True,390,255,0,105,4650,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl17.Parent("frmExportSettings")
+Gui.F_InventoryExport.lbl18.Create(Label,"EC2",True,390,255,0,1200,4650,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl18.Parent("frmExportSettings")
+Gui.F_InventoryExport.frmFieldMapping.Create(Frame)
+Gui.F_InventoryExport.frmFieldMapping.Size(5745,11940)
+Gui.F_InventoryExport.frmFieldMapping.Position(5925,120)
+Gui.F_InventoryExport.frmFieldMapping.Caption("Field Mapping")
+Gui.F_InventoryExport.GsGcExportMap.Create(GsGridControl)
+Gui.F_InventoryExport.GsGcExportMap.Size(5550,11550)
+Gui.F_InventoryExport.GsGcExportMap.Position(90,270)
+Gui.F_InventoryExport.GsGcExportMap.Parent("frmFieldMapping")
+Gui.F_InventoryExport.GsGcExportMap.Event(CellValueChanged,GsGcExportMap_CellValueChanged)
+Gui.F_InventoryExport.frmFieldLegend.Create(Frame)
+Gui.F_InventoryExport.frmFieldLegend.Size(5745,11940)
+Gui.F_InventoryExport.frmFieldLegend.Position(11805,120)
+Gui.F_InventoryExport.frmFieldLegend.Caption("Field Legend")
+Gui.F_InventoryExport.lbl4.Create(Label,"Part-Loc",True,885,255,0,120,345,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl4.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtPartLoc.Create(TextBox,"",True,1215,300,0,1080,270,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtPartLoc.Parent("frmFieldLegend")
+Gui.F_InventoryExport.lbl5.Create(Label,"Static Field 1",True,1125,255,0,120,9885,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl5.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtStcField1.Create(TextBox,"",True,1215,300,0,1365,9810,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtStcField1.Parent("frmFieldLegend")
+Gui.F_InventoryExport.lbl6.Create(Label,"Static Field 2",True,1125,255,0,120,10320,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl6.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtStcField2.Create(TextBox,"",True,1215,300,0,1365,10230,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtStcField2.Parent("frmFieldLegend")
+Gui.F_InventoryExport.lbl7.Create(Label,"Static Field 3",True,1125,255,0,120,10725,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl7.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtStcField3.Create(TextBox,"",True,1215,300,0,1365,10650,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtStcField3.Parent("frmFieldLegend")
+Gui.F_InventoryExport.lbl8.Create(Label,"Static Field 4",True,1125,255,0,2910,9885,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl8.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtStcField4.Create(TextBox,"",True,1215,300,0,4155,9810,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtStcField4.Parent("frmFieldLegend")
+Gui.F_InventoryExport.lbl9.Create(Label,"Static Field 5",True,1125,255,0,2910,10335,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl9.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtStcField5.Create(TextBox,"",True,1215,300,0,4155,10230,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtStcField5.Parent("frmFieldLegend")
+Gui.F_InventoryExport.lbl10.Create(Label,"Static Field 6",True,1125,255,0,2910,10725,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl10.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtStcField6.Create(TextBox,"",True,1215,300,0,4170,10650,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtStcField6.Parent("frmFieldLegend")
+Gui.F_InventoryExport.ddlMappedTables.Create(DropDownList)
+Gui.F_InventoryExport.ddlMappedTables.Size(1800,330)
+Gui.F_InventoryExport.ddlMappedTables.Position(2895,255)
+Gui.F_InventoryExport.ddlMappedTables.Parent("frmFieldLegend")
+Gui.F_InventoryExport.ddlMappedTables.Event(Change,ddlMappedTables_Change)
+Gui.F_InventoryExport.cmdPartLocBrw.Create(Button)
+Gui.F_InventoryExport.cmdPartLocBrw.Size(465,375)
+Gui.F_InventoryExport.cmdPartLocBrw.Position(2355,225)
+Gui.F_InventoryExport.cmdPartLocBrw.Parent("frmFieldLegend")
+Gui.F_InventoryExport.cmdPartLocBrw.Caption("^")
+Gui.F_InventoryExport.cmdPartLocBrw.Event(Click,cmdPartLocBrw_Click)
+Gui.F_InventoryExport.GsGcGSSLegend.Create(GsGridControl)
+Gui.F_InventoryExport.GsGcGSSLegend.Size(5550,8640)
+Gui.F_InventoryExport.GsGcGSSLegend.Position(90,1035)
+Gui.F_InventoryExport.GsGcGSSLegend.Parent("frmFieldLegend")
+Gui.F_InventoryExport.cmdAddDT.Create(Button)
+Gui.F_InventoryExport.cmdAddDT.Size(855,375)
+Gui.F_InventoryExport.cmdAddDT.Position(4770,225)
+Gui.F_InventoryExport.cmdAddDT.Parent("frmFieldLegend")
+Gui.F_InventoryExport.cmdAddDT.Caption("Add")
+Gui.F_InventoryExport.cmdAddDT.Event(Click,cmdAddDT_Click)
+Gui.F_InventoryExport.cmdAddDT.Enabled(False)
+Gui.F_InventoryExport.lbl13.Create(Label,"QTY - 0",True,840,255,0,150,765,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl13.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtQty.Create(TextBox,"",True,1215,300,0,1080,645,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtQty.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtQty.Locked(True)
+Gui.F_InventoryExport.txtQty.ToolTip("This is the Sum of Quantities from Item Master")
+Gui.F_InventoryExport.lbl14.Create(Label,"Exp Col 1",True,1125,255,0,120,11130,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl14.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtExpCol1.Create(TextBox,"",True,2535,300,0,1365,11070,False,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtExpCol1.Parent("frmFieldLegend")
+Gui.F_InventoryExport.txtExpCol2.Create(TextBox,"",True,2535,300,0,1365,11490,False,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtExpCol2.Parent("frmFieldLegend")
+Gui.F_InventoryExport.lbl15.Create(Label,"Exp Col 2",True,1125,255,0,120,11535,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl15.Parent("frmFieldLegend")
+Gui.F_InventoryExport.ddlExpCol1.Create(DropDownList)
+Gui.F_InventoryExport.ddlExpCol1.Size(1200,330)
+Gui.F_InventoryExport.ddlExpCol1.Position(4185,11055)
+Gui.F_InventoryExport.ddlExpCol1.Parent("frmFieldLegend")
+Gui.F_InventoryExport.ddlExpCol1.Enabled(False)
+Gui.F_InventoryExport.ddlExpCol2.Create(DropDownList)
+Gui.F_InventoryExport.ddlExpCol2.Size(1200,330)
+Gui.F_InventoryExport.ddlExpCol2.Position(4185,11460)
+Gui.F_InventoryExport.ddlExpCol2.Parent("frmFieldLegend")
+Gui.F_InventoryExport.ddlExpCol2.Enabled(False)
+Gui.F_InventoryExport.cmdSaveConfig.Create(Button)
+Gui.F_InventoryExport.cmdSaveConfig.Size(5655,525)
+Gui.F_InventoryExport.cmdSaveConfig.Position(150,11475)
+Gui.F_InventoryExport.cmdSaveConfig.Caption("Save Inventory Export Configuration")
+Gui.F_InventoryExport.cmdSaveConfig.Event(Click,cmdSaveConfig_Click)
+Gui.F_InventoryExport.frmNestingSettings.Create(Frame)
+Gui.F_InventoryExport.frmNestingSettings.Size(5745,2145)
+Gui.F_InventoryExport.frmNestingSettings.Position(75,120)
+Gui.F_InventoryExport.ddlProfile.Create(DropDownList)
+Gui.F_InventoryExport.ddlProfile.Size(1755,330)
+Gui.F_InventoryExport.ddlProfile.Position(1170,165)
+Gui.F_InventoryExport.ddlProfile.Parent("frmNestingSettings")
+Gui.F_InventoryExport.ddlProfile.Event(Click,ddlProfile_Click)
+Gui.F_InventoryExport.lbl1.Create(Label,"Export Path",True,1080,255,0,165,705,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl1.Parent("frmNestingSettings")
+Gui.F_InventoryExport.txtExpPath.Create(TextBox,"",True,3690,300,0,1320,645,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtExpPath.Parent("frmNestingSettings")
+Gui.F_InventoryExport.cmdExportPathBrw.Create(Button)
+Gui.F_InventoryExport.cmdExportPathBrw.Size(435,375)
+Gui.F_InventoryExport.cmdExportPathBrw.Position(5070,600)
+Gui.F_InventoryExport.cmdExportPathBrw.Parent("frmNestingSettings")
+Gui.F_InventoryExport.cmdExportPathBrw.Caption("^")
+Gui.F_InventoryExport.cmdExportPathBrw.Event(Click,cmdExportPathBrw_Click)
+Gui.F_InventoryExport.cmdProfileMaint.Create(Button)
+Gui.F_InventoryExport.cmdProfileMaint.Size(1800,375)
+Gui.F_InventoryExport.cmdProfileMaint.Position(3690,165)
+Gui.F_InventoryExport.cmdProfileMaint.Parent("frmNestingSettings")
+Gui.F_InventoryExport.cmdProfileMaint.Caption("Profile Maintenance")
+Gui.F_InventoryExport.cmdProfileMaint.Event(Click,cmdProfileMaint_Click)
+Gui.F_InventoryExport.chkStaticName.Create(CheckBox)
+Gui.F_InventoryExport.chkStaticName.Size(1710,360)
+Gui.F_InventoryExport.chkStaticName.Position(300,1005)
+Gui.F_InventoryExport.chkStaticName.Parent("frmNestingSettings")
+Gui.F_InventoryExport.chkStaticName.Caption("Static Field Name")
+Gui.F_InventoryExport.ddlExportType.Create(DropDownList)
+Gui.F_InventoryExport.ddlExportType.Size(1755,330)
+Gui.F_InventoryExport.ddlExportType.Position(1215,1485)
+Gui.F_InventoryExport.ddlExportType.Parent("frmNestingSettings")
+Gui.F_InventoryExport.lbl12.Create(Label,"Export Type",True,960,255,0,195,1575,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl12.Parent("frmNestingSettings")
+Gui.F_InventoryExport.lbl11.Create(Label,"Profile",True,960,255,0,90,240,True,0,"Arial",8,-2147483633,0)
+Gui.F_InventoryExport.lbl11.Parent("frmNestingSettings")
+Gui.F_InventoryExport.chkUnattendedExport.Create(CheckBox)
+Gui.F_InventoryExport.chkUnattendedExport.Size(2070,360)
+Gui.F_InventoryExport.chkUnattendedExport.Position(3240,1575)
+Gui.F_InventoryExport.chkUnattendedExport.Parent("frmNestingSettings")
+Gui.F_InventoryExport.chkUnattendedExport.Caption("Unattended Export")
+Gui.F_InventoryExport.chkUnattendedExport.Enabled(False)
+Gui.F_InventoryExport.chkUnattendedExport.Visible(False)
+Gui.F_InventoryExport.txtStaticName.Create(TextBox,"",True,3315,300,0,2040,1065,True,0,"Arial",8,-2147483643,1)
+Gui.F_InventoryExport.txtStaticName.Parent("frmNestingSettings")
+Gui.F_InventoryExport.txtStaticName.ToolTip("You can use widcards: ccc and ttt for Company Code and Terminal Number")
+Gui.F_ProfileMaint..Create
+Gui.F_ProfileMaint..Caption("Profile Maintenance")
+Gui.F_ProfileMaint..Size(6330,4830)
+Gui.F_ProfileMaint..MinX(0)
+Gui.F_ProfileMaint..MinY(0)
+Gui.F_ProfileMaint..Position(0,0)
+Gui.F_ProfileMaint..BackColor(-2147483633)
+Gui.F_ProfileMaint..MousePointer(0)
+Gui.F_ProfileMaint..Event(UnLoad,F_ProfileMaint_UnLoad)
+Gui.F_ProfileMaint.frmProfileName.Create(Frame)
+Gui.F_ProfileMaint.frmProfileName.Size(5955,795)
+Gui.F_ProfileMaint.frmProfileName.Position(60,90)
+Gui.F_ProfileMaint.lbl1.Create(Label,"Profile Name:",True,1110,255,0,120,375,True,0,"Arial",8,-2147483633,0)
+Gui.F_ProfileMaint.lbl1.Parent("frmProfileName")
+Gui.F_ProfileMaint.txtProfileName.Create(TextBox,"",True,2610,300,0,1335,285,True,0,"Arial",8,-2147483643,1)
+Gui.F_ProfileMaint.txtProfileName.Parent("frmProfileName")
+Gui.F_ProfileMaint.txtProfileName.MaxLength(10)
+Gui.F_ProfileMaint.cmdSaveProfile.Create(Button)
+Gui.F_ProfileMaint.cmdSaveProfile.Size(1320,375)
+Gui.F_ProfileMaint.cmdSaveProfile.Position(4545,240)
+Gui.F_ProfileMaint.cmdSaveProfile.Parent("frmProfileName")
+Gui.F_ProfileMaint.cmdSaveProfile.Caption("Save Profile")
+Gui.F_ProfileMaint.cmdSaveProfile.Event(Click,cmdSaveProfile_Click)
+Gui.F_ProfileMaint.frmG_ProfileMaint.Create(Frame)
+Gui.F_ProfileMaint.frmG_ProfileMaint.Size(5925,3285)
+Gui.F_ProfileMaint.frmG_ProfileMaint.Position(60,915)
+Gui.F_ProfileMaint.GsGcProfileMaint.Create(GsGridControl)
+Gui.F_ProfileMaint.GsGcProfileMaint.Size(5790,3060)
+Gui.F_ProfileMaint.GsGcProfileMaint.Position(60,150)
+Gui.F_ProfileMaint.GsGcProfileMaint.Parent("frmG_ProfileMaint")
+Gui.F_ProfileMaint.GsGcProfileMaint.Event(RowCellClick,GsGcProfileMaint_RowCellClick)
+Gui.F_DatatableMaint..Create
+Gui.F_DatatableMaint..Size(8595,5340)
+Gui.F_DatatableMaint..MinX(0)
+Gui.F_DatatableMaint..MinY(0)
+Gui.F_DatatableMaint..Position(0,0)
+Gui.F_DatatableMaint..BackColor(-2147483633)
+Gui.F_DatatableMaint..MousePointer(0)
+Gui.F_DatatableMaint..Event(UnLoad,F_DatatableMaint_UnLoad)
+Gui.F_DatatableMaint.GsGridControl1.Create(GsGridControl)
+Gui.F_DatatableMaint.GsGridControl1.Size(8085,3075)
+Gui.F_DatatableMaint.GsGridControl1.Position(150,1515)
+Gui.F_DatatableMaint.frmDelete.Create(Frame)
+Gui.F_DatatableMaint.frmDelete.Size(1290,1380)
+Gui.F_DatatableMaint.frmDelete.Position(6930,60)
+Gui.F_DatatableMaint.frmDelete.Caption("Delete")
+Gui.F_DatatableMaint.frmDelete.Enabled(False)
+Gui.F_DatatableMaint.frmDelete.Visible(False)
+Gui.F_DatatableMaint.cmd2.Create(Button)
+Gui.F_DatatableMaint.cmd2.Size(1095,375)
+Gui.F_DatatableMaint.cmd2.Position(105,870)
+Gui.F_DatatableMaint.cmd2.Parent("frmDelete")
+Gui.F_DatatableMaint.cmd2.Caption("Delete")
+Gui.F_DatatableMaint.ddl1.Create(DropDownList)
+Gui.F_DatatableMaint.ddl1.Size(1095,330)
+Gui.F_DatatableMaint.ddl1.Position(105,255)
+Gui.F_DatatableMaint.ddl1.Parent("frmDelete")
+Gui.F_DatatableMaint.frame1.Create(Frame)
+Gui.F_DatatableMaint.frame1.Size(5520,1380)
+Gui.F_DatatableMaint.frame1.Position(135,75)
+Gui.F_DatatableMaint.frame1.Caption("Add Datatable")
+Gui.F_DatatableMaint.lbl1.Create(Label,"Datatable Name:",True,1350,255,0,90,285,True,0,"Arial",8,-2147483633,0)
+Gui.F_DatatableMaint.lbl1.Parent("frame1")
+Gui.F_DatatableMaint.txt1.Create(TextBox,"",True,3870,300,0,1515,195,True,0,"Arial",8,-2147483643,1)
+Gui.F_DatatableMaint.txt1.Parent("frame1")
+Gui.F_DatatableMaint.lbl2.Create(Label,"Key Values:",True,1020,255,0,90,645,True,0,"Arial",8,-2147483633,0)
+Gui.F_DatatableMaint.lbl2.Parent("frame1")
+Gui.F_DatatableMaint.chk1.Create(CheckBox)
+Gui.F_DatatableMaint.chk1.Size(705,360)
+Gui.F_DatatableMaint.chk1.Position(105,885)
+Gui.F_DatatableMaint.chk1.Parent("frame1")
+Gui.F_DatatableMaint.chk1.Caption("Part")
+Gui.F_DatatableMaint.chk1.Enabled(False)
+Gui.F_DatatableMaint.chk1.Value(1)
+Gui.F_DatatableMaint.chk2.Create(CheckBox)
+Gui.F_DatatableMaint.chk2.Size(1035,360)
+Gui.F_DatatableMaint.chk2.Position(885,885)
+Gui.F_DatatableMaint.chk2.Parent("frame1")
+Gui.F_DatatableMaint.chk2.Caption("Location")
+Gui.F_DatatableMaint.chk2.Enabled(False)
+Gui.F_DatatableMaint.chk2.Value(1)
+Gui.F_DatatableMaint.chk4.Create(CheckBox)
+Gui.F_DatatableMaint.chk4.Size(660,360)
+Gui.F_DatatableMaint.chk4.Position(1995,885)
+Gui.F_DatatableMaint.chk4.Parent("frame1")
+Gui.F_DatatableMaint.chk4.Caption("Lot")
+Gui.F_DatatableMaint.chk5.Create(CheckBox)
+Gui.F_DatatableMaint.chk5.Size(765,360)
+Gui.F_DatatableMaint.chk5.Position(3450,885)
+Gui.F_DatatableMaint.chk5.Parent("frame1")
+Gui.F_DatatableMaint.chk5.Caption("Heat")
+Gui.F_DatatableMaint.chk3.Create(CheckBox)
+Gui.F_DatatableMaint.chk3.Size(660,360)
+Gui.F_DatatableMaint.chk3.Position(2730,885)
+Gui.F_DatatableMaint.chk3.Parent("frame1")
+Gui.F_DatatableMaint.chk3.Caption("Bin")
+Gui.F_DatatableMaint.cmdAdd.Create(Button)
+Gui.F_DatatableMaint.cmdAdd.Size(1080,375)
+Gui.F_DatatableMaint.cmdAdd.Position(4320,870)
+Gui.F_DatatableMaint.cmdAdd.Parent("frame1")
+Gui.F_DatatableMaint.cmdAdd.Caption("Add")
+Program.Sub.ScreenSU.End
+
+'GCG_5608_Inventory_Export
+'Part of 4980 Standard Nesting Export
+'Alejandro Anazco Villarreal
+'7/12/19
+Program.Sub.Preflight.Start
+'Forces Profile creation.
+v.Global.bForceProfile.Declare(Boolean, False)
+v.Global.sSingleSettingRet.Declare(String, "")
+v.Global.sSettingListRet.Declare(String, "")
+v.Global.sSelectedProfile.Declare(String, "")
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'Checks for project 4980
+
+f.Intrinsic.Control.CallSub(setExportType)
+f.Intrinsic.Control.CallSub(createFieldMapDictionary)
+f.Intrinsic.Control.CallSub(createEmptyDataTables)
+f.Intrinsic.Control.CallSub(loadProfileDDL)
+f.Intrinsic.Control.CallSub(loadExportTypeDDL)
+f.Intrinsic.Control.CallSub(checkDefaultProfile)
+f.Intrinsic.Control.CallSub(loadProfileMaint)
+f.Intrinsic.Control.CallSub(setScreenDefaults)
+f.Intrinsic.Control.CallSub(checkInventoryAllSystem)
+f.Intrinsic.Control.If(v.Global.bForceProfile)
+	gui.F_ProfileMaint..Show
+f.Intrinsic.Control.Else
+	f.Intrinsic.Control.CallSub(loadProfile)
+	gui.F_InventoryExport..Show
+f.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+'****************************************Pre Load****************************************
+Program.Sub.setExportType.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sValue.Declare
+f.Intrinsic.Control.Try
+	'Profile/Load_Option
+	v.Local.sProfile.Set("GSS_SYSTEM")
+	v.Local.sType.Set("LOAD_OPTION")
+	v.Local.sSetting.Set("EXPORT_TYPE")
+	v.Local.sValue.Set("exportTypeDT")
+	
+	'Create ExportDT
+	f.Data.DataTable.Create("exportTypeDT", true)
+	f.Data.DataTable.AddColumn("exportTypeDT", "VALUE", "String")
+	'Add Export Types
+	f.Data.DataTable.AddRow("exportTypeDT", "VALUE", "PEP")
+		
+	'Save Export_Type
+	f.Intrinsic.Control.If(v.Local.sValue.Trim, <>, "")
+		f.Intrinsic.Control.CallSub(saveSetting_DT, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	f.Intrinsic.Control.EndIf
+	
+	f.Data.DataTable.Close("exportTypeDT")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.setExportType.End
+
+Program.Sub.createFieldMapDictionary.Start
+f.Intrinsic.Control.Try
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.Dictionary.CreateFromSQL("fieldMapDict", "con", "Select Field_Index, Field_Name from GCG_5608_TABLE_FIELD order by Field_Index asc")
+		f.Data.Dictionary.CreateFromSQL("tableMapDict", "con", "Select Field_Index, Table_Index from GCG_5608_TABLE_FIELD order by Field_Index asc")
+	f.ODBC.Connection!con.Close
+	
+	f.Data.Dictionary.AddItem("fieldMapDict", "0", "GSS_QTY_ON_HAND")
+	f.Data.Dictionary.AddItem("fieldMapDict", "ST1", "Static_Field_1")
+	f.Data.Dictionary.AddItem("fieldMapDict", "ST2", "Static_Field_2")
+	f.Data.Dictionary.AddItem("fieldMapDict", "ST3", "Static_Field_3")
+	f.Data.Dictionary.AddItem("fieldMapDict", "ST4", "Static_Field_4")
+	f.Data.Dictionary.AddItem("fieldMapDict", "ST5", "Static_Field_5")
+	f.Data.Dictionary.AddItem("fieldMapDict", "ST6", "Static_Field_6")
+	f.Data.Dictionary.AddItem("fieldMapDict", "EC1", "Exp_Col_1")
+	f.Data.Dictionary.AddItem("fieldMapDict", "EC2", "Exp_Col_2")
+	f.Data.Dictionary.AddItem("fieldMapDict", "NA", "N/A")
+	f.Data.Dictionary.SetDefaultReturn("fieldMapDict", "")
+	f.Data.Dictionary.SetDefaultReturn("tableMapDict", 0)
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.createFieldMapDictionary.End
+
+Program.Sub.createEmptyDataTables.Start
+f.Intrinsic.Control.Try
+	'Create Profile Maintenance Data Table.
+	f.Data.DataTable.Create("profileMaintDT", true)
+	f.Data.DataTable.AddColumn("profileMaintDT", "profileName", "String")
+	f.Data.DataTable.AddColumn("profileMaintDT", "default", "Bit")
+	f.Data.DataTable.AddColumn("profileMaintDT", "delete", "String")
+	
+	gui.F_ProfileMaint.GsGcProfileMaint.AddGridviewFromDatatable("profileMaintGV", "profileMaintDT")
+	gui.F_ProfileMaint.GsGcProfileMaint.MainView("profileMaintGV")
+	f.Intrinsic.Control.CallSub(loadProfileGridProperties)
+	
+	'Product Line
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.DataTable.CreateFromSQL("productLineDT", "con", "Select RTRIM(PRODUCT_LINE) AS productLine, RTRIM(PRODUCT_LINE) AS VALUE from V_PRODUCT_LINE", True)
+	f.ODBC.Connection!con.Close
+	f.Data.DataTable.AddColumn("productLineDT", "selected", "Bit", 0)
+	
+	gui.F_InventoryExport.GsGcProductLines.AddGridviewFromDatatable("productLineGV", "productLineDT")
+	gui.F_InventoryExport.GsGcProductLines.MainView("productLineGV")
+	f.Intrinsic.Control.CallSub(loadProductLineGridProperties)
+	
+	'Units of Measure
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.DataTable.CreateFromSQL("umDT", "con", "Select RTRIM(code) AS unitMeasure, RTRIM(code) AS VALUE from V_UM_CODES", True)
+	f.ODBC.Connection!con.Close
+	f.Data.DataTable.AddColumn("umDT", "selected", "Bit", 0)
+	
+	gui.F_InventoryExport.GsGcUM.AddGridviewFromDatatable("umGV", "umDT")
+	gui.F_InventoryExport.GsGcUM.MainView("umGV")
+	f.Intrinsic.Control.CallSub(loadUnitMeasureGridProperties)
+
+	'Load FieldLegend
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.DataTable.CreateFromSQL("fieldTitlesLegendDT", "con", "Select * from GCG_5608_TABLE_FIELD Order by Table_Index, Field_Index asc", True)
+		f.Data.DataView.Create("fieldTitlesLegendDT", "fieldTitlesLegendDV", 22, "Table_Index = 0", "")
+	f.ODBC.Connection!con.Close
+	f.Data.DataTable.AddColumn("fieldTitlesLegendDT", "Field_Value", "String")
+
+	gui.F_InventoryExport.GsGcGSSLegend.AddGridviewFromDataview("fieldTitlesLegendGV", "fieldTitlesLegendDT", "fieldTitlesLegendDV")
+	gui.F_InventoryExport.GsGcGSSLegend.MainView("fieldTitlesLegendGV")
+	f.Intrinsic.Control.CallSub(loadFieldLegendGridProperties)	
+
+	'Field_Map
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.DataTable.CreateFromSQL("fieldMapDT", "con", "Select top 1 * from GCG_5608_MAPPING", true)
+	f.ODBC.Connection!con.Close
+	
+	f.Data.DataTable.DeleteRow("fieldMapDT")
+	f.Data.DataTable.AcceptChanges("fieldMapDT")
+	f.Data.DataView.Create("fieldMapDT", "fieldMapDV", 22, "", "FILE_INDEX asc")
+	gui.F_InventoryExport.GsGcExportMap.AddGridviewFromDataview("fieldMapGV", "fieldMapDT", "fieldMapDV")
+	gui.F_InventoryExport.GsGcExportMap.MainView("fieldMapGV")
+	f.Intrinsic.Control.CallSub(loadFieldMapGridProperties)	
+	
+	'Settings
+	f.Data.DataTable.Create("tmpSettingDT", true)
+	f.Data.DataTable.AddColumn("tmpSettingDT", "PROFILE", "String")
+	f.Data.DataTable.AddColumn("tmpSettingDT", "TYPE", "String")
+	f.Data.DataTable.AddColumn("tmpSettingDT", "SETTING", "String")
+	f.Data.DataTable.AddColumn("tmpSettingDT", "VALUE", "String")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.createEmptyDataTables.End
+
+Program.Sub.loadProfileGridProperties.Start
+f.Intrinsic.Control.Try
+	'Caption
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "profileName", "Caption", "Profile")
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "default", "Caption", "Default")
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "delete", "Caption", "Delete")
+	'HeaderForeColor
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "profileName", "HeaderForeColor", v.Color.White)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "default", "HeaderForeColor", v.Color.White)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "delete", "HeaderForeColor", v.Color.White)
+	'HeaderBackColor
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "profileName", "HeaderBackColor", v.Color.GSS)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "default", "HeaderBackColor", v.Color.GSS)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "delete", "HeaderBackColor", v.Color.GSS)
+	'HeaderFontBold
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "profileName", "HeaderFontBold", True)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "default", "HeaderFontBold", True)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "delete", "HeaderFontBold", True)
+	'ReadOnly
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "profileName", "ReadOnly", True)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "default", "ReadOnly", True)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "delete", "ReadOnly", True)
+	'AllowEdit
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "profileName", "AllowEdit", False)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "default", "AllowEdit", False)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "delete", "AllowEdit", False)
+	'MinWidth
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "profileName", "MinWidth", 80)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "default", "MinWidth", 80)
+	gui.F_ProfileMaint.GsGcProfileMaint.SetColumnProperty("profileMaintGV", "delete", "MinWidth", 80)
+	'Set Button
+	gui.F_ProfileMaint.GsGcProfileMaint.ColumnEdit("profileMaintGV", "delete", "EditorButton", "Delete")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadProfileGridProperties.End
+
+Program.Sub.loadProductLineGridProperties.Start
+f.Intrinsic.Control.Try
+	'Caption
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "Caption", "PL")
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "Caption", "Selected")
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "Caption", "VALUE")
+	'HeaderHAlignment
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "HeaderHAlignment", "Center")
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "HeaderHAlignment", "Center")
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "HeaderHAlignment", "Center")
+	'CellHAlignment
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "CellHAlignment", "Center")
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "CellHAlignment", "Center")
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "CellHAlignment", "Center")
+	'HeaderForeColor
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "HeaderForeColor", v.Color.White)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "HeaderForeColor", v.Color.White)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "HeaderForeColor", v.Color.White)
+	'HeaderBackColor
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "HeaderBackColor", v.Color.GSS)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "HeaderBackColor", v.Color.GSS)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "HeaderBackColor", v.Color.GSS)
+	'HeaderFontBold
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "HeaderFontBold", True)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "HeaderFontBold", True)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "HeaderFontBold", True)
+	'ReadOnly
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "ReadOnly", True)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "ReadOnly", False)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "ReadOnly", True)
+	'AllowEdit
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "AllowEdit", False)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "AllowEdit", True)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "AllowEdit", False)
+	'MinWidth
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "MinWidth", 25)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "MinWidth", 40)
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "MinWidth", 25)
+	'Visible Index
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "productLine", "VisibleIndex", "0")
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "selected", "VisibleIndex", "1")
+	gui.F_InventoryExport.GsGcProductLines.SetColumnProperty("productLineGV", "VALUE", "Visible", False)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadProductLineGridProperties.End
+
+Program.Sub.loadUnitMeasureGridProperties.Start
+f.Intrinsic.Control.Try
+	'Caption
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "Caption", "UM")
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "Caption", "Selected")
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "Caption", "VALUE")
+	'HeaderHAlignment
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "HeaderHAlignment", "Center")
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "HeaderHAlignment", "Center")
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "HeaderHAlignment", "Center")
+	'CellHAlignment
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "CellHAlignment", "Center")
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "CellHAlignment", "Center")
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "CellHAlignment", "Center")
+	'HeaderForeColor
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "HeaderForeColor", v.Color.White)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "HeaderForeColor", v.Color.White)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "HeaderForeColor", v.Color.White)
+	'HeaderBackColor
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "HeaderBackColor", v.Color.GSS)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "HeaderBackColor", v.Color.GSS)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "HeaderBackColor", v.Color.GSS)
+	'HeaderFontBold
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "HeaderFontBold", True)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "HeaderFontBold", True)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "HeaderFontBold", True)
+	'ReadOnly
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "ReadOnly", True)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "ReadOnly", False)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "ReadOnly", True)
+	'AllowEdit
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "AllowEdit", False)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "AllowEdit", True)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "AllowEdit", False)
+	'MinWidth
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "MinWidth", 25)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "MinWidth", 40)
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "MinWidth", 25)
+	'Visible Index
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "unitMeasure", "VisibleIndex", "0")
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "selected", "VisibleIndex", "1")
+	gui.F_InventoryExport.GsGcUM.SetColumnProperty("umGV", "VALUE", "Visible", False)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadUnitMeasureGridProperties.End
+
+Program.Sub.loadFieldLegendGridProperties.Start
+v.Local.iCnt.Declare
+v.Local.sFields.Declare
+f.Intrinsic.Control.Try
+	f.Intrinsic.String.Split(v.DataTable.fieldTitlesLegendDT.FieldNames, "*!*", v.Local.sFields)
+	f.Intrinsic.Control.For(v.Local.iCnt, 0, v.Local.sFields.UBound, 1)
+		gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", v.Local.sFields(v.Local.iCnt), "HeaderFontBold", True)
+		gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", v.Local.sFields(v.Local.iCnt), "Visible", True)
+		gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", v.Local.sFields(v.Local.iCnt), "ReadOnly", True)
+		gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", v.Local.sFields(v.Local.iCnt), "AllowEdit", False)
+		gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", v.Local.sFields(v.Local.iCnt), "HeaderHAlignment", "Near")
+		gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", v.Local.sFields(v.Local.iCnt), "CellHAlignment", "Near")
+		gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", v.Local.sFields(v.Local.iCnt), "HeaderBackColor", v.Color.GSS)
+		gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", v.Local.sFields(v.Local.iCnt), "HeaderForeColor", v.Color.White)
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+	
+	'Visible
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Profile", "Visible", False)
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Table_Index", "Visible", False)
+
+	'Caption
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Profile", "Caption", "Profile")
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Name", "Caption", "Field Name")
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Index", "Caption", "Index")
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Table_Index", "Caption", "Table Index")
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Value", "Caption", "Field Value")
+	
+	'VisibleIndex
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Name", "VisibleIndex", 0)
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Index", "VisibleIndex", 1)
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Value", "VisibleIndex", 2)
+	
+	'Width
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Name", "Width", 60)
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Index", "Width", 30)
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Value", "Width", 60)	
+	
+	'CellHAlignment
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Index", "CellHAlignment", "Center")
+	'HeaderHAligment
+	gui.F_InventoryExport.GsGcGSSLegend.SetColumnProperty("fieldTitlesLegendGV", "Field_Index", "HeaderHAlignment", "Center")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadFieldLegendGridProperties.End
+
+Program.Sub.loadFieldMapGridProperties.Start
+v.Local.iCnt.Declare
+v.Local.sFields.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	f.Intrinsic.String.Split(v.DataTable.fieldMapDT.FieldNames, "*!*", v.Local.sFields)
+	f.Intrinsic.Control.For(v.Local.iCnt, 0, v.Local.sFields.UBound, 1)
+		gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", v.Local.sFields(v.Local.iCnt), "HeaderFontBold", True)
+		gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", v.Local.sFields(v.Local.iCnt), "Visible", True)
+		gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", v.Local.sFields(v.Local.iCnt), "ReadOnly", True)
+		gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", v.Local.sFields(v.Local.iCnt), "AllowEdit", False)
+		gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", v.Local.sFields(v.Local.iCnt), "HeaderHAlignment", "Near")
+		gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", v.Local.sFields(v.Local.iCnt), "CellHAlignment", "Near")
+		gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", v.Local.sFields(v.Local.iCnt), "HeaderBackColor", v.Color.GSS)
+		gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", v.Local.sFields(v.Local.iCnt), "HeaderForeColor", v.Color.White)
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+	
+	'Visible
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Profile", "Visible", False)
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "File_Index", "Visible", False)
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Table_Index", "Visible", False)
+	
+	'Caption
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Profile", "Caption", "Profile")
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "File_Title", "Caption", "Map Title")
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "File_Index", "Caption", "Map Index")
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "GSS_NAME", "Caption", "GSS Title")
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Field_Index", "Caption", "GSS Index")
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Table_Index", "Caption", "Table Index")
+		
+	'CellHAlignment
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "File_Index", "CellHAlignment", "Center")
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Field_Index", "CellHAlignment", "Center")
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Table_Index", "CellHAlignment", "Center")
+'	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "GSS_NAME", "CellHAlignment", "Near")
+	
+	'HeaderHAlignment
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "File_Index", "HeaderHAlignment", "Center")
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Field_Index", "HeaderHAlignment", "Center")
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Table_Index", "HeaderHAlignment", "Center")
+	
+	'Width
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "File_Title", "Width", 60)
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "GSS_NAME", "Width", 60)
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Field_Index", "Width", 40)
+	
+	'Width
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "File_Title", "VisibleIndex", 0)
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "GSS_NAME", "VisibleIndex", 2)
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Field_Index", "VisibleIndex", 1)
+	
+	'AllowEdit/ReadOnly
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Field_Index", "AllowEdit", True)
+	gui.F_InventoryExport.GsGcExportMap.SetColumnProperty("fieldMapGV", "Field_Index", "ReadOnly", False)
+	
+	'Dropdown
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.ODBC.Connection!con.ExecuteAndReturn("Select Field_Index from GCG_5608_TABLE_FIELD order by Field_Index asc", v.Local.sRet)
+	f.ODBC.Connection!con.Close
+	f.Intrinsic.String.Replace(v.Local.sRet, "#$#", "*!*", v.Local.sRet)
+	f.Intrinsic.String.Build("*!*0*!*{0}*!*ST1*!*ST2*!*ST3*!*ST4*!*ST5*!*ST6*!*EC1*!*EC2*!*NA", v.Local.sRet, v.Local.sRet)
+	'f.Intrinsic.String.Build("0*!*{0}", v.Local.sRet, v.Local.sRet)
+	gui.F_InventoryExport.GsGcExportMap.ColumnEdit("fieldMapGV", "Field_Index", "Dropdownlist", v.Local.sRet)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadFieldMapGridProperties.End
+
+Program.Sub.loadProfileDDL.Start
+f.Intrinsic.Control.Try
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.DataTable.CreateFromSQL("tmpProfileMaintDT", "con", "Select Value as profileName from GCG_5608_SETTINGS where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'PROFILE'")
+	f.ODBC.Connection!con.Close
+	gui.F_InventoryExport.ddlProfile.AddItems("DataTable", "tmpProfileMaintDT", "profileName", "profileName")
+	f.Data.DataTable.Close("tmpProfileMaintDT")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadProfileDDL.End
+
+Program.Sub.loadExportTypeDDL.Start
+f.Intrinsic.Control.Try
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.DataTable.CreateFromSQL("tmpExportTypesDT", "con", "Select Value as profileName from GCG_5608_SETTINGS where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'EXPORT_TYPE'")
+	f.ODBC.Connection!con.Close
+	gui.F_InventoryExport.ddlExportType.AddItems("DataTable", "tmpExportTypesDT", "profileName", "profileName")
+	f.Data.DataTable.Close("tmpExportTypesDT")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadExportTypeDDL.End
+
+Program.Sub.checkDefaultProfile.Start
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.ODBC.Connection!con.ExecuteAndReturn("Select top 1 VALUE from GCG_5608_SETTINGS where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'DEFAULT'", v.Local.sRet)
+	f.ODBC.Connection!con.Close
+	
+	f.Intrinsic.Control.If(v.Local.sRet.Trim, =, "")
+		v.Global.bForceProfile.Set(True)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.ddlProfile.Text(v.Local.sRet)
+		
+		'v.Global.sSelectedProfile.Set(v.Local.sRet)
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.checkDefaultProfile.End
+
+Program.Sub.setScreenDefaults.Start
+f.Intrinsic.Control.Try
+	gui.F_InventoryExport.optCST.Value(true)
+	
+	'Load Datatable DDL
+	f.ODBC.Connection!con.OpenCompanyConnection
+		'f.Intrinsic.String.Build("Select Table_Name From GCG_5608_TABLE_MAP order by TABLE_INDEX ASC")
+		f.Data.DataTable.CreateFromSQL("tmpDatatablesDT", "con", "Select Table_Name From GCG_5608_TABLE_MAP order by TABLE_INDEX ASC ")
+	f.ODBC.Connection!con.Close
+	gui.F_InventoryExport.ddlMappedTables.AddItems("DataTable", "tmpDatatablesDT", "Table_Name", "Table_Name")
+	gui.F_InventoryExport.ddlMappedTables.ListIndex(0)
+	f.Data.DataView.SetFilter("fieldTitlesLegendDT", "fieldTitlesLegendDV", "Table_Index = 1")
+	f.Data.DataTable.Close("tmpDatatablesDT")
+	
+	gui.F_InventoryExport.ddlExpCol1.AddItem("")
+	gui.F_InventoryExport.ddlExpCol1.AddItem("STRING")
+	gui.F_InventoryExport.ddlExpCol1.AddItem("LONG")
+	gui.F_InventoryExport.ddlExpCol1.AddItem("FLOAT")
+	gui.F_InventoryExport.ddlExpCol1.AddItem("BOOLEAN")
+	gui.F_InventoryExport.ddlExpCol1.Text("")
+	
+	gui.F_InventoryExport.ddlExpCol2.AddItem("")
+	gui.F_InventoryExport.ddlExpCol2.AddItem("STRING")
+	gui.F_InventoryExport.ddlExpCol2.AddItem("LONG")
+	gui.F_InventoryExport.ddlExpCol2.AddItem("FLOAT")
+	gui.F_InventoryExport.ddlExpCol2.AddItem("BOOLEAN")
+	gui.F_InventoryExport.ddlExpCol2.Text("")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.setScreenDefaults.End
+
+Program.Sub.checkInventoryAllSystem.Start
+v.Local.sMsg.Declare
+f.Intrinsic.Control.Try
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.DataTable.CreateFromSQL("invAllTableSysDT", "con", "Select top 1 * from GCG_5608_TABLE_MAP where Profile = 'GSS_SYSTEM'")
+		f.Data.DataTable.CreateFromSQL("invAllFieldSysDT", "con", "Select top 1 * from GCG_5608_TABLE_FIELD where Profile = 'GSS_SYSTEM'")
+	f.ODBC.Connection!con.Close
+	
+	f.Intrinsic.Control.If(v.DataTable.invAllTableSysDT.RowCount, =, 0)
+	f.Intrinsic.Control.AndIf(v.DataTable.invAllFieldSysDT.RowCount, =, 0)
+		f.Intrinsic.Control.CallSub(createFieldTitleListFromDB, passedDTName, "V_Inventory_All", passedProfile, "GSS_SYSTEM", passedTableKey, "PART+LOCATION")
+		f.Data.DataTable.Close("invAllTableSysDT")
+		f.Data.DataTable.Close("invAllFieldSysDT")
+	f.Intrinsic.Control.ElseIf(v.DataTable.invAllTableSysDT.RowCount, <>, v.DataTable.invAllFieldSysDT.RowCount)
+		f.Intrinsic.String.Build("There is a Data Inconsistency in Profile 'GSS_SYSTEM'.{0}Datatables:{0}- 'GCG_5608_TABLE_MAP'{0}- 'GCG_5608_TABLE_FIELD'{0}Please contact Global Shop.", v.Ambient.NewLine, v.Local.sMsg)
+		f.Intrinsic.UI.Msgbox(v.Local.sMsg)
+		f.Data.DataTable.Close("invAllTableSysDT")
+		f.Data.DataTable.Close("invAllFieldSysDT")
+		f.Intrinsic.Control.End
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.checkInventoryAllSystem.End
+
+'****************************************Profile Maintenance****************************************
+Program.Sub.loadProfileMaint.Start
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.DataTable.CreateFromSQL("tmpProfileMaintDT", "con", "Select Value as profileName from GCG_5608_SETTINGS where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'PROFILE'")
+		f.ODBC.Connection!con.ExecuteAndReturn("Select top 1 VALUE from GCG_5608_SETTINGS where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'DEFAULT'", v.Local.sRet)
+	f.ODBC.Connection!con.Close
+	
+	'Adding columns for temp Profile.
+	f.Data.DataTable.AddColumn("tmpProfileMaintDT", "default", "Bit")
+	f.Data.DataTable.AddColumn("tmpProfileMaintDT", "delete", "String")
+	
+	'Setting Dictionary.
+	f.Data.Dictionary.Create("defaultDict")
+	f.Data.Dictionary.AddItem("defaultDict", v.Local.sRet, true)
+	f.Data.Dictionary.SetDefaultReturn("defaultDict", false)
+	f.Data.DataTable.SetValueFormat("tmpProfileMaintDT", -1, "profileName", "profileName", ">")
+	f.Data.DataTable.FillFromDictionary("tmpProfileMaintDT", "defaultDict", "profileName", "default")
+	f.Data.Dictionary.Close("defaultDict")
+	
+	'Merge and Close Temp Datatable.
+	f.Data.DataTable.DeleteRow("profileMaintDT")
+	f.Data.DataTable.AcceptChanges("profileMaintDT")
+	f.Data.DataTable.Merge("tmpProfileMaintDT", "profileMaintDT", false, 2)
+	f.Data.DataTable.Close("tmpProfileMaintDT")
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadProfileMaint.End
+
+Program.Sub.cmdSaveProfile_Click.Start
+v.Local.sProfileName.Declare
+v.Local.sTemp.Declare
+v.Local.sRet.Declare
+v.Local.sSQL.Declare
+f.Intrinsic.Control.Try
+	'Set local profile variable from screen input
+	v.Local.sProfileName.Set(v.Screen.F_ProfileMaint!txtProfileName.Text)
+	f.Intrinsic.String.UCase(v.Local.sProfileName, v.Local.sProfileName)
+	'Check if empty
+	f.Intrinsic.Control.If(v.Local.sProfileName.Trim, =, "")
+		f.Intrinsic.Control.ExitSub
+	f.Intrinsic.Control.EndIf
+	'Check if it is system reserve option
+	f.Intrinsic.Control.If(v.Local.sProfileName.Trim, =, "GSS_SYSTEM")
+		f.Intrinsic.String.Build("{0}GSS_SYSTEM{0} can't be used as a Profile Name, please use another text.", v.Ambient.DblQuote, v.Local.sTemp)
+		f.Intrinsic.UI.Msgbox(v.Local.sTemp)
+		f.Intrinsic.Control.ExitSub
+	f.Intrinsic.Control.EndIf
+	'Check if it exists in DB.
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select top 1 Value from GCG_5608_SETTINGS where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'PROFILE' AND VALUE = '{0}'", v.Local.sProfileName, v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sRet)
+	f.ODBC.Connection!con.Close
+	
+	f.Intrinsic.Control.If(v.Local.sRet.Trim, <>, "")
+		f.Intrinsic.String.Build("{0}{1}{0} already exists as Profile Name, please use another text", v.Ambient.DblQuote, v.Local.sProfileName, v.Local.sTemp)
+		f.Intrinsic.UI.Msgbox(v.Local.sTemp)
+		f.Intrinsic.Control.ExitSub
+	f.Intrinsic.Control.EndIf
+	
+	'Insert New Profile
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Insert into GCG_5608_SETTINGS (PROFILE, TYPE, SETTING, VALUE) Values ('GSS_SYSTEM', 'LOAD_OPTION', 'PROFILE', '{0}')", v.Local.sProfileName, v.Local.sSQL)
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		
+		'Check if there's is a default profile.
+		f.ODBC.Connection!con.ExecuteAndReturn("Select top 1 VALUE from GCG_5608_SETTINGS where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'DEFAULT'", v.Local.sRet)
+		'Set as default.
+		f.Intrinsic.Control.If(v.Local.sRet.Trim, =, "")
+			f.Intrinsic.String.Build("Insert into GCG_5608_SETTINGS (PROFILE, TYPE, SETTING, VALUE) Values ('GSS_SYSTEM', 'LOAD_OPTION', 'DEFAULT', '{0}')", v.Local.sProfileName, v.Local.sSQL)
+			f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		f.Intrinsic.Control.EndIf
+	f.ODBC.Connection!con.Close
+	'Clear textbox
+	gui.F_ProfileMaint.txtProfileName.Text("")
+	'reload profiles.
+	f.Intrinsic.Control.CallSub(loadProfileMaint)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdSaveProfile_Click.End
+
+Program.Sub.GsGcProfileMaint_RowCellClick.Start
+v.Local.sProfile.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+
+	gui.F_ProfileMaint..Enabled(False)
+	v.Local.sProfile.Set(v.DataTable.profileMaintDT(v.Args.RowIndex).profileName!FieldVal)
+	
+	f.Intrinsic.Control.SelectCase(v.Args.Column)
+		f.Intrinsic.Control.Case("default")
+			'Set the new default 
+			f.Data.Dictionary.Create("defaultDict")
+		'	f.Intrinsic.String.RPad(v.Local.sProfile, " ", 10, v.Local.sRet)
+			f.Data.Dictionary.AddItem("defaultDict", v.Local.sProfile, true, true)
+			f.Data.Dictionary.SetDefaultReturn("defaultDict", false)
+			f.Data.DataTable.SetValueFormat("profileMaintDT", -1, "profileName", "profileName", ">")
+			f.Data.DataTable.FillFromDictionary("profileMaintDT", "defaultDict", "profileName", "default")
+			f.Data.Dictionary.Close("defaultDict")
+			'Updates the DT
+			f.ODBC.Connection!con.OpenCompanyConnection
+				f.Intrinsic.String.Build("Update GCG_5608_SETTINGS Set VALUE = '{0}' where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'DEFAULT'", v.Local.sProfile.Trim, v.Local.sSQL)
+				f.ODBC.Connection!con.Execute(v.Local.sSQL)
+			f.ODBC.Connection!con.Close
+			
+		f.Intrinsic.Control.Case("delete")
+			f.ODBC.Connection!con.OpenCompanyConnection
+				'Get Default Profile Name
+				f.ODBC.Connection!con.ExecuteAndReturn("Select top 1 VALUE from GCG_5608_SETTINGS where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'DEFAULT'", v.Local.sRet)
+				'Check agaisnt row Profile Name
+				f.Intrinsic.Control.If(v.Local.sRet.Trim, =, v.Local.sProfile.Trim)
+					f.Intrinsic.UI.Msgbox("Can't delete a default value, please select a new default and try again")
+				f.Intrinsic.Control.Else
+					f.Intrinsic.String.Build("Delete From GCG_5608_SETTINGS where PROFILE = 'GSS_SYSTEM' AND TYPE = 'LOAD_OPTION' AND SETTING = 'PROFILE' AND VALUE = '{0}'", v.Local.sProfile.Trim, v.Local.sSQL)
+					f.ODBC.Connection!con.Execute(v.Local.sSQL)
+					f.Data.DataTable.DeleteRow("profileMaintDT", v.Args.RowIndex)
+					f.Data.DataTable.AcceptChanges("profileMaintDT")
+				f.Intrinsic.Control.EndIf				
+			f.ODBC.Connection!con.Close
+			
+	f.Intrinsic.Control.EndSelect
+	gui.F_ProfileMaint..Enabled(True)
+	'Exit
+	f.Intrinsic.Control.ExitSub
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.GsGcProfileMaint_RowCellClick.End
+
+Program.Sub.F_ProfileMaint_UnLoad.Start
+f.Intrinsic.Control.Try
+	gui.F_ProfileMaint..Enabled(false)
+	gui.F_ProfileMaint..Visible(false)
+	gui.F_InventoryExport.ddlProfile.ClearItems
+	gui.F_InventoryExport..Enabled(True)
+	f.Intrinsic.Control.CallSub(loadProfileDDL)
+	f.Intrinsic.Control.CallSub(checkDefaultProfile)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.F_ProfileMaint_UnLoad.End
+
+Program.Sub.cmdProfileMaint_Click.Start
+f.Intrinsic.Control.Try
+	gui.F_InventoryExport..Enabled(False)
+	gui.F_ProfileMaint..Enabled(true)
+	gui.F_ProfileMaint..Visible(true)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdProfileMaint_Click.End
+
+'****************************************Load Profile Settings****************************************
+Program.Sub.loadProfile.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+'v.Local.sValue.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+v.Local.iCheckRet.Declare
+
+f.Intrinsic.Control.Try
+'Try something
+	'Profile/Load_Option
+	v.Local.sProfile.Set(v.Screen.F_InventoryExport!ddlProfile.Value)
+	v.Local.sType.Set("LOAD_OPTION")
+	
+	'Load Export_Path	
+	v.Local.sSetting.Set("Export_Path")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtExpPath.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtExpPath.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Load Static_Name	
+	v.Local.sSetting.Set("Static_Name")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, =, "***YES***")
+		gui.F_InventoryExport.chkStaticName.Value(1)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.chkStaticName.Value(0)
+	f.Intrinsic.Control.EndIf
+	
+	'Load File_Name	
+	v.Local.sSetting.Set("File_Name")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtStaticName.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtStaticName.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Load Export_Type	
+	v.Local.sSetting.Set("Export_Type")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.ddlExportType.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.ddlExportType.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Load Unattended_Export	
+	v.Local.sSetting.Set("Unattended_Export")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, =, "***YES***")
+		gui.F_InventoryExport.chkUnattendedExport.Value(1)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.chkUnattendedExport.Value(0)
+	f.Intrinsic.Control.EndIf
+	
+	'Load Field_Map_Type	
+	v.Local.sSetting.Set("Field_Map_Type")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, =, "***CSV***")
+		gui.F_InventoryExport.optCST.Value(1)
+		gui.F_InventoryExport.optUNC.Value(0)
+	f.Intrinsic.Control.ElseIf(v.Global.sSingleSettingRet.Trim, =, "***UNC***")
+		gui.F_InventoryExport.optCST.Value(0)
+		gui.F_InventoryExport.optUNC.Value(1)
+	f.Intrinsic.Control.EndIf
+	
+	'Load Product Lines
+	v.Local.sSetting.Set("Product_Line")
+	f.Intrinsic.Control.CallSub(getSetting_DT, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.DataTable.tmpValueDT.RowCount, >, 0)
+		f.Data.DataTable.AddColumn("tmpValueDT", "selected", "Boolean", true)	
+		f.Data.Dictionary.CreateFromDataTable("plSelectedDict", "tmpValueDT", "VALUE", "selected")
+		f.Data.Dictionary.SetDefaultReturn("plSelectedDict", false)
+		f.Data.DataTable.FillFromDictionary("productLineDT", "plSelectedDict", "VALUE", "selected")
+		f.Data.Dictionary.Close("plSelectedDict")
+	f.Intrinsic.Control.EndIf
+	
+	'Load Unit of Measure
+	v.Local.sSetting.Set("Unit_Measure")
+	f.Intrinsic.Control.CallSub(getSetting_DT, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.DataTable.tmpValueDT.RowCount, >, 0)
+		f.Data.DataTable.AddColumn("tmpValueDT", "selected", "Boolean", true)	
+		f.Data.Dictionary.CreateFromDataTable("umSelectedDict", "tmpValueDT", "VALUE", "selected")
+		f.Data.Dictionary.SetDefaultReturn("umSelectedDict", false)
+		f.Data.DataTable.FillFromDictionary("umDT", "umSelectedDict", "VALUE", "selected")
+		f.Data.Dictionary.Close("umSelectedDict")
+	f.Intrinsic.Control.EndIf
+	
+	'Load Codesort
+	v.Local.sSetting.Set("Code_Sort")
+	f.Intrinsic.Control.CallSub(getSetting_DT, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.String.Replace(v.Global.sSettingListRet, "#$#", ",", v.Local.sRet)
+	f.Intrinsic.Control.If(v.Local.sRet, =, "***BLANK***")
+		v.Local.sRet.Set("")
+	f.Intrinsic.Control.EndIf
+	gui.F_InventoryExport.txtCodeSort.Text(v.Local.sRet)
+	
+	'Load Export Field Names	
+	v.Local.sSetting.Set("Export_Names")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, =, "***YES***")
+		gui.F_InventoryExport.chkExportFieldNames.Value(1)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.chkExportFieldNames.Value(0)
+	f.Intrinsic.Control.EndIf
+	
+	'Load Mapping
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select Profile, File_Title, File_Index, GSS_Name, RTrim(Field_Index) as Field_Index, Table_Index from GCG_5608_MAPPING where PROFILE = '{0}' order by FILE_INDEX asc", v.Local.sProfile, v.Local.sSQL)
+		f.Data.DataTable.CreateFromSQL("tmpMapDT",  "con", v.Local.sSQL)
+		f.Intrinsic.String.Build("Select FILE_TITLE from GCG_5608_MAPPING where PROFILE = '{0}' order by FILE_INDEX asc", v.Local.sProfile, v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sRet)
+	f.ODBC.Connection!con.Close
+	
+	f.Intrinsic.String.Replace(v.Local.sRet, "#$#", ",", v.Local.sRet)
+	gui.F_InventoryExport.txtFieldTitles.Text(v.Local.sRet)
+	
+	v.Global.sSelectedProfile.Set(v.Local.sRet)
+	
+	f.Data.DataTable.DeleteRow("fieldMapDT")
+	f.Data.DataTable.AcceptChanges("fieldMapDT")
+	f.Data.DataTable.Merge("tmpMapDT", "fieldMapDT", false, 2)
+	f.Data.DataTable.Close("tmpMapDT")	
+	
+	'Save Static Field 1
+	v.Local.sType.Set("Static_Field")
+	v.Local.sSetting.Set("Static_Field_1")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtStcField1.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtStcField1.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Save Static Field 2
+	v.Local.sSetting.Set("Static_Field_2")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtStcField2.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtStcField2.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Save Static Field 3
+	v.Local.sSetting.Set("Static_Field_3")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtStcField3.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtStcField3.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Save Static Field 4
+	v.Local.sSetting.Set("Static_Field_4")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtStcField4.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtStcField4.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Save Static Field 5
+	v.Local.sSetting.Set("Static_Field_5")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtStcField5.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtStcField5.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Save Static Field 6
+	v.Local.sSetting.Set("Static_Field_6")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtStcField6.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtStcField6.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Expression Columns
+	v.Local.sType.Set("Exp_Col")
+	'Save Exp Col 1	
+	v.Local.sSetting.Set("Exp_Col_1")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtExpCol1.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtExpCol1.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Save Exp Col 2
+	v.Local.sSetting.Set("Exp_Col_2")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtExpCol2.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtExpCol2.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Load Exp_Col_1_Type	
+	v.Local.sSetting.Set("Exp_Col_1_Type")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.ddlExpCol1.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.ddlExpCol1.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Load Exp_Col_2_Type	
+	v.Local.sSetting.Set("Exp_Col_2_Type")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.ddlExpCol2.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.ddlExpCol2.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Save Exp Col 1
+	v.Local.sSetting.Set("EC1_DT_MAP")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtEC1.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtEC1.Text("")
+	f.Intrinsic.Control.EndIf
+	
+	'Save Exp Col 2
+	v.Local.sSetting.Set("EC2_DT_MAP")
+	f.Intrinsic.Control.CallSub(getSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting)
+	f.Intrinsic.Control.If(v.Global.sSingleSettingRet.Trim, <>, "***BLANK***")
+		gui.F_InventoryExport.txtEC2.Text(v.Global.sSingleSettingRet.Trim)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.txtEC2.Text("")
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadProfile.End
+
+'****************************************Main Screen Controls****************************************
+Program.Sub.cmdExportPathBrw_Click.Start
+v.Local.sRet.Declare
+	f.Intrinsic.Control.Try
+		f.Intrinsic.UI.FolderBrowser("Select a Export Directory", ,v.Local.sRet)
+		f.Intrinsic.Control.If(v.Local.sRet, <>, "***CANCEL***")
+			f.Intrinsic.String.Build("{0}\", v.Local.sRet, v.Local.sRet)
+			gui.F_InventoryExport.txtExpPath.Text(v.Local.sRet.Trim)
+		f.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.Catch
+		f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+	f.Intrinsic.Control.EndTry
+Program.Sub.cmdExportPathBrw_Click.End
+
+Program.Sub.cmdUploadFieldTitles_Click.Start
+v.Local.sText.Declare
+v.Local.sInput.Declare
+v.Local.sRet.Declare
+v.Local.iCnt.Declare
+v.Local.bCST.Declare
+v.Local.bExists.Declare
+v.Local.sProfile.Declare
+f.Intrinsic.Control.Try
+	v.Local.bCST.Set(v.Screen.F_InventoryExport!optCST.Value)
+	v.Local.sInput.Set(v.Screen.F_InventoryExport!txtFieldTitles.Text)
+	v.Local.sProfile.Set(v.Screen.F_InventoryExport!ddlProfile.Value)
+	f.Intrinsic.String.UCase(v.Local.sInput, v.Local.sInput)
+	
+	f.Intrinsic.Control.If(v.Local.bCST)
+		f.Intrinsic.String.Split(v.Local.sInput, ",", v.Local.sRet)
+		f.Intrinsic.Control.If(v.Local.sRet.UBound, =, 0)
+			f.Intrinsic.UI.Msgbox("Please input at least two columns to be mapped, separated by ','")
+			f.Intrinsic.Control.ExitSub
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.DataTable.tmpFieldTitleDT.Exists)
+			f.Data.DataTable.Close("tmpFieldTitleDT")
+		f.Intrinsic.Control.EndIf
+		
+		f.Data.DataTable.CreateFromString("tmpFieldTitleDT", v.Local.sInput, "FILE_TITLE", "string", "&!&", ",", true)
+
+	f.Intrinsic.Control.Else
+		f.Intrinsic.String.Split(v.Local.sInput.Trim, ".", v.Local.sRet)
+		f.Intrinsic.Control.If(v.Local.sRet.UBound, >, 1)
+			f.Intrinsic.UI.Msgbox("Please input File with extension.")
+			f.Intrinsic.Control.ExitSub
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.Local.sRet(1).UCase, <>, "CSV")
+			f.Intrinsic.UI.Msgbox("Please input a CSV File.")
+			f.Intrinsic.Control.ExitSub
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.File.Exists(v.Local.sInput.Trim, v.Local.bExists)
+		f.Intrinsic.Control.If(v.Local.bExists, =, False)
+			f.Intrinsic.UI.Msgbox("Unable to access file.")
+			f.Intrinsic.Control.Exit
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.File.File2String(v.Local.sInput.Trim,  v.Local.sText)
+		
+		f.Intrinsic.String.Split(v.Local.sText, ",", v.Local.sRet)
+		f.Intrinsic.Control.If(v.Local.sRet.UBound, =, 0)
+			f.Intrinsic.UI.Msgbox("Please input a file with at least two columns to be mapped, separated by ','")
+			f.Intrinsic.Control.ExitSub
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.Control.If(v.DataTable.tmpFieldTitleDT.Exists)
+			f.Data.DataTable.Close("tmpFieldTitleDT")
+		f.Intrinsic.Control.EndIf
+			
+		f.Data.DataTable.CreateFromString("tmpFieldTitleDT", v.Local.sText, "FILE_TITLE", "string", "&!&", ",", true)
+		
+	f.Intrinsic.Control.EndIf
+
+	f.Data.DataTable.AddColumn("tmpFieldTitleDT", "PROFILE", "String", v.Local.sProfile)
+	f.Data.DataTable.AddColumn("tmpFieldTitleDT", "FILE_INDEX", "Long")
+	f.Data.DataTable.AddColumn("tmpFieldTitleDT", "FIELD_INDEX", "String", "")
+	f.Data.DataTable.SetSeries("tmpFieldTitleDT", "FILE_INDEX", 0, 1)
+	f.Data.DataTable.DeleteRow("fieldMapDT")
+	f.Data.DataTable.AcceptChanges("fieldMapDT")
+	f.Data.DataTable.Merge("tmpFieldTitleDT", "fieldMapDT", false, 2)
+	f.Data.DataTable.Close("tmpFieldTitleDT")	
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdUploadFieldTitles_Click.End
+
+Program.Sub.cmdSaveExportSettings_Click.Start
+Program.Sub.cmdSaveExportSettings_Click.End
+
+Program.Sub.cmdSaveConfig_Click.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sValue.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+v.Local.iCheckRet.Declare
+v.Local.sTemp.Declare
+
+f.Intrinsic.Control.Try
+	'Profile/Load_Option
+	v.Local.sProfile.Set(v.Screen.F_InventoryExport!ddlProfile.Value)
+	v.Local.sType.Set("LOAD_OPTION")
+	
+	'Save Export_Path	
+	v.Local.sSetting.Set("Export_Path")
+	v.Local.sValue.Set(v.Screen.F_InventoryExport!txtExpPath.Text)
+	f.Intrinsic.Control.If(v.Local.sValue.Trim, <>, "")
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	f.Intrinsic.Control.EndIf
+	
+	'Save Static_Name
+	v.Local.sSetting.Set("Static_Name")
+	v.Local.iCheckRet.Set(v.Screen.F_InventoryExport!chkStaticName.Value)
+	
+	f.Intrinsic.Control.If(v.Local.iCheckRet, =, 1)
+		v.Local.sValue.Set("***YES***")
+	f.Intrinsic.Control.Else
+		v.Local.sValue.Set("***NO***")
+	f.Intrinsic.Control.EndIf
+
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Save File_Name
+	v.Local.sSetting.Set("File_Name")
+	v.Local.sValue.Set(v.Screen.F_InventoryExport!txtStaticName.Text)
+	f.Intrinsic.Control.If(v.Local.sValue.Trim, <>, "")
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	f.Intrinsic.Control.EndIf
+	
+	'Save Export_Type
+	v.Local.sSetting.Set("Export_Type")
+	v.Local.sValue.Set(v.Screen.F_InventoryExport!ddlExportType.Value)
+	f.Intrinsic.Control.If(v.Local.sValue.Trim, <>, "")
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set("***BLANK***")
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	f.Intrinsic.Control.EndIf
+	
+	'Save Unattended_Export
+	v.Local.sSetting.Set("Unattended_Export")
+	v.Local.iCheckRet.Set(v.Screen.F_InventoryExport!chkUnattendedExport.Value)
+	
+	f.Intrinsic.Control.If(v.Local.iCheckRet, =, 1)
+		v.Local.sValue.Set("***YES***")
+	f.Intrinsic.Control.Else
+		v.Local.sValue.Set("***NO***")
+	f.Intrinsic.Control.EndIf
+
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Save Field_Map_Type
+	v.Local.sSetting.Set("Field_Map_Type")
+	f.Intrinsic.Control.If(v.Screen.F_InventoryExport!optCST.Value)
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", "***CSV***")
+	f.Intrinsic.Control.ElseIf(v.Screen.F_InventoryExport!optUNC.Value)
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", "***UNC***")
+	f.Intrinsic.Control.EndIf
+	
+	'Save Product Lines
+	v.Local.sSetting.Set("Product_Line")
+	f.Data.DataView.Create("productLineDT", "productLineDV", 22, "selected ", "" )
+	f.Data.DataView.ToDataTableDistinct("productLineDT", "productLineDV", "tmpDT", "VALUE", true)
+	f.Intrinsic.Control.CallSub(saveSetting_DT, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", "tmpDT")
+	f.Data.DataTable.Close("tmpDT")
+	f.Data.DataView.Close("productLineDT", "productLineDV")
+	
+	'Save Units of Measure
+	v.Local.sSetting.Set("Unit_Measure")
+	f.Data.DataView.Create("umDT", "umDV", 22, "selected ", "" )
+	f.Data.DataView.ToDataTableDistinct("umDT", "umDV", "tmpDT", "VALUE", true)
+	f.Intrinsic.Control.CallSub(saveSetting_DT, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", "tmpDT")
+	f.Data.DataTable.Close("tmpDT")
+	f.Data.DataView.Close("umDT", "umDV")
+
+	'Save Codesort
+	v.Local.sSetting.Set("Code_Sort")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtCodeSort.Text)
+	f.Data.DataTable.CreateFromString("tmpDT", v.Local.sTemp.Trim, "VALUE", "String", "*!*", ",", True)
+	f.Intrinsic.Control.CallSub(saveSetting_DT, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", "tmpDT")
+	f.Data.DataTable.Close("tmpDT")
+	
+	'Save  Export Field Names	
+	v.Local.sSetting.Set("Export_Names")
+	v.Local.iCheckRet.Set(v.Screen.F_InventoryExport!chkExportFieldNames.Value)
+	
+	f.Intrinsic.Control.If(v.Local.iCheckRet, =, 1)
+		v.Local.sValue.Set("***YES***")
+	f.Intrinsic.Control.Else
+		v.Local.sValue.Set("***NO***")
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Save Mapping
+	f.Data.DataTable.AcceptChanges("fieldMapDT")
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Delete from GCG_5608_MAPPING where PROFILE = '{0}'", v.Local.sProfile, v.Local.sSQL)
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		f.Data.DataTable.SaveToDB("fieldMapDT", "con", "GCG_5608_MAPPING", "PROFILE*!*FILE_TITLE*!*FILE_INDEX", 256)
+	f.ODBC.Connection!con.Close
+	
+	'Save Static Field 1
+	v.Local.sType.Set("Static_Field")
+	v.Local.sSetting.Set("Static_Field_1")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtStcField1.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+
+	'Save Static Field 2
+	v.Local.sSetting.Set("Static_Field_2")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtStcField2.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+
+	'Save Static Field 3
+	v.Local.sSetting.Set("Static_Field_3")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtStcField3.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Save Static Field 4
+	v.Local.sSetting.Set("Static_Field_4")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtStcField4.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Save Static Field 5
+	v.Local.sSetting.Set("Static_Field_5")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtStcField5.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Save Static Field 6
+	v.Local.sSetting.Set("Static_Field_6")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtStcField6.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Expression Columns
+	v.Local.sType.Set("Exp_Col")
+	'Save Exp Col 1	
+	v.Local.sSetting.Set("Exp_Col_1")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtExpCol1.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Save Exp Col 2
+	v.Local.sSetting.Set("Exp_Col_2")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtExpCol2.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Save Exp_Col_1_Type
+	v.Local.sSetting.Set("Exp_Col_1_Type")
+	v.Local.sValue.Set(v.Screen.F_InventoryExport!ddlExpCol1.Value)
+	f.Intrinsic.Control.If(v.Local.sValue.Trim, <>, "")
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set("***BLANK***")
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	f.Intrinsic.Control.EndIf
+	
+	'Save Exp_Col_2_Type
+	v.Local.sSetting.Set("Exp_Col_2_Type")
+	v.Local.sValue.Set(v.Screen.F_InventoryExport!ddlExpCol2.Value)
+	f.Intrinsic.Control.If(v.Local.sValue.Trim, <>, "")
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set("***BLANK***")
+		f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	f.Intrinsic.Control.EndIf
+		
+	'Save Expression Column 1 DT Map ID
+	v.Local.sSetting.Set("EC1_DT_MAP")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtEC1.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+
+	'Save Expression Column 2 DT Map ID
+	v.Local.sSetting.Set("EC2_DT_MAP")
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!txtEC2.Text!FieldValTrim)
+	f.Intrinsic.Control.If(v.Local.sTemp.Trim, =, "")
+		v.Local.sValue.Set("***BLANK***")
+	f.Intrinsic.Control.Else	
+		v.Local.sValue.Set(v.Local.sTemp.Trim)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.CallSub(saveSetting, "passedProfile", v.Local.sProfile, "passedType", v.Local.sType, "passedSetting", v.Local.sSetting, "passedValue", v.Local.sValue)
+	
+	'Save Complete.
+	f.Intrinsic.UI.Msgbox("Save Complete")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdSaveConfig_Click.End
+
+Program.Sub.ddlMappedTables_Change.Start
+v.Local.sTemp.Declare
+v.Local.sFilter.Declare
+v.Local.iRet.Declare
+f.Intrinsic.Control.Try
+	v.Local.sTemp.Set(v.Screen.F_InventoryExport!ddlMappedTables.Value)
+	gui.F_InventoryExport.ddlMappedTables.FindItem(v.Local.sTemp, true, v.Local.iRet)
+	f.Intrinsic.Math.Add(v.Local.iRet, 1, v.Local.iRet)
+	f.Intrinsic.String.Build("Table_Index = '{0}'", v.Local.iRet, v.Local.sFilter)
+	f.Data.DataView.SetFilter("fieldTitlesLegendDT", "fieldTitlesLegendDV", v.Local.sFilter)	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.ddlMappedTables_Change.End
+
+'****************************************Functionality Subroutines****************************************
+Program.Sub.ErrorMsg.Start
+v.Local.sError.Declare
+
+'Closes ODBC connection, default to connection : "con"
+f.Intrinsic.Control.If(v.ODBC!con.State, =, 1)
+	f.ODBC.Connection!con.Close
+f.Intrinsic.Control.EndIf
+
+'Generic Error message.
+f.Intrinsic.String.Build("Project GCG_5608_Inventory_Export.g2u {0}{0}Subroutine: {1}{0}Error: {2} with Description: {3}", v.Ambient.NewLine, v.Args.CurrentSub, v.Ambient.ErrorNumber, v.Ambient.ErrorDescription, v.Local.sError)
+f.Intrinsic.UI.Msgbox(v.Local.sError)
+Program.Sub.ErrorMsg.End
+
+Program.Sub.F_InventoryExport_UnLoad.Start
+f.Intrinsic.Control.Try
+	f.Intrinsic.Control.End
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.F_InventoryExport_UnLoad.End
+
+Program.Sub.saveSetting.Start
+'Call Statement
+'f.Intrinsic.Control.CallSub(getSetting, passedProfile, "", passedType, "", passedSetting, "", passedValue, "")
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sValue.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	v.Local.sProfile.Set(v.Args.passedProfile)
+	v.Local.sType.Set(v.Args.passedType)
+	v.Local.sSetting.Set(v.Args.passedSetting)
+	v.Local.sValue.Set(v.Args.passedValue)
+
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select top 1 VALUE from GCG_5608_SETTINGS where PROFILE = '{0}' AND TYPE = '{1}' AND SETTING = '{2}'", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sRet)
+		
+		f.Intrinsic.Control.If(v.Local.sRet.Trim, =, "")
+			f.Intrinsic.String.Build("Insert into GCG_5608_SETTINGS (PROFILE, TYPE, SETTING, VALUE) Values ('{0}', '{1}', '{2}', '{3}')", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sValue, v.Local.sSQL)
+			f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		f.Intrinsic.Control.Else
+			f.Intrinsic.String.Build("Update GCG_5608_SETTINGS Set VALUE = '{0}' where PROFILE = '{1}' AND TYPE = '{2}' AND SETTING = '{3}'", v.Local.sValue, v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+			f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		f.Intrinsic.Control.EndIf
+	f.ODBC.Connection!con.Close	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.saveSetting.End
+
+Program.Sub.getSetting.Start
+'Call Statement
+'f.Intrinsic.Control.CallSub(getSetting, passedProfile, "", passedType, "", passedSetting, "")
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	v.Local.sProfile.Set(v.Args.passedProfile)
+	v.Local.sType.Set(v.Args.passedType)
+	v.Local.sSetting.Set(v.Args.passedSetting)
+
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select top 1 VALUE from GCG_5608_SETTINGS where PROFILE = '{0}' AND TYPE = '{1}' AND SETTING = '{2}'", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sRet)
+		
+		f.Intrinsic.Control.If(v.Local.sRet.Trim, =, "")
+			v.Global.sSingleSettingRet.Set("***BLANK***")
+		f.Intrinsic.Control.Else
+			v.Global.sSingleSettingRet.Set(v.Local.sRet)
+		f.Intrinsic.Control.EndIf
+	f.ODBC.Connection!con.Close	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.getSetting.End
+
+Program.Sub.saveSetting_DT.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sValue.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	v.Local.sProfile.Set(v.Args.passedProfile)
+	v.Local.sType.Set(v.Args.passedType)
+	v.Local.sSetting.Set(v.Args.passedSetting)
+	v.Local.sValue.Set(v.Args.passedValue)
+	
+	f.Data.DataTable.AddColumn(v.Local.sValue, "PROFILE", "String", v.Local.sProfile)
+	f.Data.DataTable.AddColumn(v.Local.sValue, "TYPE", "String", v.Local.sType)
+	f.Data.DataTable.AddColumn(v.Local.sValue, "SETTING", "String", v.Local.sSetting)
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Delete from GCG_5608_SETTINGS where PROFILE = '{0}' AND TYPE = '{1}' AND SETTING = '{2}'", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		
+		f.Data.DataTable.SaveToDB(v.Local.sValue, "con", "GCG_5608_SETTINGS", "PROFILE*!*TYPE*!*SETTING*!*VALUE", 256)
+	f.ODBC.Connection!con.Close	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.saveSetting_DT.End
+
+Program.Sub.getSetting_DT.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	v.Local.sProfile.Set(v.Args.passedProfile)
+	v.Local.sType.Set(v.Args.passedType)
+	v.Local.sSetting.Set(v.Args.passedSetting)
+
+	
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select RTRIM(VALUE) as VALUE from GCG_5608_SETTINGS where PROFILE = '{0}' AND TYPE = '{1}' AND SETTING = '{2}'", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sRet)
+		
+		f.Intrinsic.Control.If(v.DataTable.tmpValueDT.Exists)
+			f.Data.DataTable.Close("tmpValueDT")
+		f.Intrinsic.Control.EndIf
+		f.Data.DataTable.CreateFromSQL("tmpValueDT", "con", v.Local.sSQL, true)
+		
+		f.Intrinsic.Control.If(v.Local.sRet.Trim, =, "")
+			v.Global.sSettingListRet.Set("***BLANK***")
+		f.Intrinsic.Control.Else
+			v.Global.sSettingListRet.Set(v.Local.sRet)
+		f.Intrinsic.Control.EndIf
+	f.ODBC.Connection!con.Close	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.getSetting_DT.End
+
+Program.Sub.createFieldTitleListFromDB.Start
+v.Local.sDT_Name.Declare
+v.Local.sProfileName.Declare
+v.Local.sTableKey.Declare
+v.Local.sSQL.Declare
+v.Local.sFieldTitles.Declare
+v.Local.iRet.Declare
+v.Local.iTableIndex.Declare
+v.Local.iFieldIndex.Declare
+v.Local.iCnt.Declare
+f.Intrinsic.Control.Try
+	v.Local.sDT_Name.Set(v.Args.passedDTName)
+	v.Local.sProfileName.Set(v.Args.passedProfile)
+	v.Local.sTableKey.Set(v.Args.passedTableKey)
+	
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select top 1 * from {0}", v.Local.sDT_Name, v.Local.sSQL)
+		f.Data.DataTable.CreateFromSQL("fieldListDT", "con", v.Local.sSQL)
+		
+		f.ODBC.Connection!con.ExecuteAndReturn("Select Top 1 Table_index from GCG_5608_TABLE_MAP order by Table_index desc", v.Local.iRet)
+		f.Intrinsic.Math.Add(v.Local.iRet, 1, v.Local.iTableIndex)
+		
+		f.Intrinsic.String.Build("Insert into  GCG_5608_TABLE_MAP (PROFILE, TABLE_NAME, TABLE_INDEX, TABLE_KEY) Values ('{0}', '{1}', '{2}', '{3}')", v.Local.sProfileName, v.Local.sDT_Name, v.Local.iTableIndex, v.Local.sTableKey, v.Local.sSQL)
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		
+		f.ODBC.Connection!con.ExecuteAndReturn("Select Top 1 Field_Index from GCG_5608_TABLE_FIELD order by Field_Index desc", v.Local.iRet)
+		f.Intrinsic.Math.Add(v.Local.iRet, 1, v.Local.iFieldIndex)
+	f.ODBC.Connection!con.Close
+
+	f.Intrinsic.String.Split(v.DataTable.fieldListDT.FieldNames, "*!*", v.Local.sFieldTitles)
+	f.Data.DataTable.Create("saveTableFieldDT")
+	f.Data.DataTable.AddColumn("saveTableFieldDT", "PROFILE", "String")
+	f.Data.DataTable.AddColumn("saveTableFieldDT", "FIELD_NAME", "String")
+	f.Data.DataTable.AddColumn("saveTableFieldDT", "FIELD_INDEX", "Long")
+	f.Data.DataTable.AddColumn("saveTableFieldDT", "TABLE_INDEX", "Long")
+	
+	f.Intrinsic.Control.For(v.Local.iCnt, 0, v.Local.sFieldTitles.UBound, 1)
+		f.Data.DataTable.AddRow("saveTableFieldDT", "PROFILE", v.Local.sProfileName, "FIELD_NAME", v.Local.sFieldTitles(v.Local.iCnt), "FIELD_INDEX", v.Local.iFieldIndex, "TABLE_INDEX", v.Local.iTableIndex)
+		f.Intrinsic.Math.Add(v.Local.iFieldIndex, 1, v.Local.iFieldIndex)
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Data.DataTable.SaveToDB("saveTableFieldDT", "con", "GCG_5608_TABLE_FIELD", "PROFILE*!*FIELD_NAME*!*FIELD_INDEX*!*TABLE_INDEX", 256)
+	f.ODBC.Connection!con.Close	
+	
+	f.Data.DataTable.Close("fieldListDT")
+	f.Data.DataTable.Close("saveTableFieldDT")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.createFieldTitleListFromDB.End
+
+Program.Sub.getFieldTitleListFromDB.Start
+v.Local.sDB_Name.Declare
+f.Intrinsic.Control.Try
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.getFieldTitleListFromDB.End
+
+Program.Sub.showSelectedDTfromDDL.Start
+Program.Sub.showSelectedDTfromDDL.End
+
+Program.Sub.GsGcExportMap_CellValueChanged.Start
+f.Intrinsic.Control.Try 
+	f.Intrinsic.Control.If(v.Args.Column.UCase, =, "FIELD_INDEX")
+		f.Data.DataTable.FillFromDictionary("fieldMapDT", "fieldMapDict", "FIELD_INDEX", "GSS_NAME")
+		f.Data.DataTable.FillFromDictionary("fieldMapDT", "tableMapDict", "FIELD_INDEX", "TABLE_INDEX")
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.GsGcExportMap_CellValueChanged.End
+
+Program.Sub.cmdAddDT_Click.Start
+f.Intrinsic.Control.Try
+	gui.F_DatatableMaint..Show
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdAddDT_Click.End
+
+Program.Sub.F_DatatableMaint_UnLoad.Start
+f.Intrinsic.Control.Try
+	gui.F_DatatableMaint..Visible(False)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.F_DatatableMaint_UnLoad.End
+
+Program.Sub.cmdPartLocBrw_Click.Start
+v.Local.sRet.Declare
+v.Local.sTemp.Declare
+v.Local.sPart.Declare
+v.Local.sLocation.Declare
+f.Intrinsic.Control.Try
+	f.Intrinsic.UI.CommonBrowser(105, "", v.Local.sRet)
+
+	f.Intrinsic.Control.If(v.Local.sRet.Trim, <>, "***CANCEL***")
+		f.Intrinsic.String.Split(v.Local.sRet, "*!*", v.Local.sTemp)
+		v.Local.sPart.Set(v.Local.sTemp(0))
+		v.Local.sLocation.Set(v.Local.sTemp(1))
+		f.Intrinsic.String.Build("{0}{1}", v.Local.sPart, v.Local.sLocation, v.Local.sRet)
+		gui.F_InventoryExport.txtPartLoc.Text(v.Local.sRet)
+		f.Intrinsic.Control.CallSub(loadLegendValues, passedPart, v.Local.sPart, passedLocation, v.Local.sLocation, passedKeyValue, v.Local.sRet)
+	f.Intrinsic.Control.EndIf
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdPartLocBrw_Click.End
+
+Program.Sub.loadLegendValues.Start
+v.Local.sRet.Declare
+v.Local.sTemp.Declare
+v.Local.sPart.Declare
+v.Local.sLocation.Declare
+v.Local.sDT.Declare
+v.Local.sTableKey.Declare
+v.local.sSQL.Declare
+v.Local.iCnt.Declare
+v.Local.iTableIndex.Declare
+v.Local.sTableKeyRecord.Declare
+f.Intrinsic.Control.Try
+	v.Local.sPart.Set(v.Args.passedPart)
+	v.Local.sLocation.Set(v.Args.passedLocation)
+	v.Local.sTableKeyRecord.Set(v.Args.passedKeyValue)
+	
+	'Check Map DT 
+	f.Intrinsic.Control.If(v.DataTable.tableMapDT.Exists)
+		f.Data.DataTable.Close("tableMapDT")
+	f.Intrinsic.Control.EndIf
+	
+	'Get the different Table_Indexes
+	f.Data.DataView.Create("fieldTitlesLegendDT", "fieldTitlesLegendAllDV", 22)
+	f.Data.DataView.ToDataTableDistinct("fieldTitlesLegendDT", "fieldTitlesLegendAllDV", "tableMapDT","TABLE_INDEX", True)
+	f.Data.DataView.Close("fieldTitlesLegendDT", "fieldTitlesLegendAllDV")
+	'Create Datatable to hold vertical data.
+	f.Data.DataTable.Create("fieldLegendTMP_DT")
+''	f.Data.DataTable.AddColumn("fieldLegendTMP_DT", "Field_Name", "String")
+	f.Data.DataTable.AddColumn("fieldLegendTMP_DT", "Field_Value", "String")
+	
+	'Go through the differet Table_indexes
+	f.Intrinsic.Control.For(v.Local.iCnt, 0, v.DataTable.tableMapDT.RowCount--, 1)
+	v.Local.iTableIndex.Set(v.DataTable.fieldTitlesLegendDT(v.Local.iCnt).Table_Index!FieldVal)
+		'Get the value Keys Values for specifics Tables, and set table load of data.
+		f.ODBC.Connection!con.OpenCompanyConnection
+			f.Intrinsic.String.Build("Select Table_Name from GCG_5608_Table_Map where Table_Index = '{0}'", v.Local.iTableIndex, v.Local.sSQL)
+			f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sDT)
+			f.Intrinsic.String.Build("Select Table_Key from GCG_5608_Table_Map where Table_Index = '{0}'", v.Local.iTableIndex, v.Local.sSQL)
+			f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sTableKey)
+			f.Intrinsic.String.Build("Select * from {0} where {1} = '{2}'", v.Local.sDT, v.Local.sTableKey, v.Local.sTableKeyRecord, v.Local.sSQL)
+			f.Data.DataTable.CreateFromSQL("dataTmpDT", "con", v.Local.sSQL)
+		f.ODBC.Connection!con.Close
+		
+		'Get a string of the Data.
+		f.Data.DataView.Create("dataTmpDT", "dataTmpDV", 22)
+		f.Data.DataView.ToString("dataTmpDT", "dataTmpDV", v.DataTable.dataTmpDT.FieldNames, "*!*", "$!$!", v.Local.sRet)
+		f.Data.DataView.Close("dataTmpDT", "dataTmpDV")
+		'Create a single column Datatable with the Field_Values, then Add a series to be able to link it.
+		f.Data.DataTable.CreateFromString("tmpFieldValueDT", v.Local.sRet, "Field_Value", "String", "$!$", "*!*")
+		'Merge column into holder DT.
+		f.Data.DataTable.Merge("tmpFieldValueDT", "fieldLegendTMP_DT", false, 2)
+		
+		'Close DTs to start the loop again.
+		f.Data.DataTable.Close("dataTmpDT")
+		f.Data.DataTable.Close("tmpFieldValueDT")
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+		
+	'Add a series  to match to for dictionary		
+	f.Data.DataTable.AddColumn("fieldLegendTMP_DT", "index_DT", "Long")
+	f.Data.DataTable.SetSeries("fieldLegendTMP_DT", "index_DT", 1, 1)
+		
+	f.Data.Dictionary.CreateFromDataTable("legendDictionary", "fieldLegendTMP_DT", "index_DT", "Field_Value")
+	f.Data.DataTable.Close("fieldLegendTMP_DT")
+	f.Data.Dictionary.SetDefaultReturn("legendDictionary", "")
+	f.Data.DataTable.FillFromDictionary("fieldTitlesLegendDT", "legendDictionary", "Field_Index", "Field_Value")
+	f.Data.Dictionary.Close("legendDictionary")
+	
+	'Get Quantity for part Selected.
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select Sum(Quantity) as Quantity from Item_Master where Part+Location = '{0} ' group by Part, Location", v.Local.sTableKeyRecord, v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sRet)
+	f.ODBC.Connection!con.Close
+	'Show Quantity for part Selected.
+	gui.F_InventoryExport.txtQty.Text(v.Local.sRet)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.loadLegendValues.End
+
+Program.Sub.clearControls.Start
+f.Intrinsic.Control.Try
+	gui.F_InventoryExport.txtExpPath.Text("")
+	gui.F_InventoryExport.txtStaticName.Text("")
+	gui.F_InventoryExport.txtFieldTitles.Text("")
+	gui.F_InventoryExport.txtCodeSort.Text("")
+	gui.F_InventoryExport.txtPartLoc.Text("")
+	gui.F_InventoryExport.txtQty.Text("")
+	gui.F_InventoryExport.txtStcField1.Text("")
+	gui.F_InventoryExport.txtStcField2.Text("")
+	gui.F_InventoryExport.txtStcField3.Text("")
+	gui.F_InventoryExport.txtStcField4.Text("")
+	gui.F_InventoryExport.txtStcField5.Text("")
+	gui.F_InventoryExport.txtStcField6.Text("")
+	f.Data.DataTable.SetValue("productLineDT", -1, "Selected", false)
+	f.Data.DataTable.DeleteRow("fieldMapDT")
+	f.Data.DataTable.AcceptChanges("fieldMapDT")
+	f.Data.DataTable.SetValue("fieldTitlesLegendDT", -1, "Field_Value", "")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.clearControls.End
+
+Program.Sub.ddlProfile_Click.Start
+v.Local.sCurrentSelectedProfile.Declare
+f.Intrinsic.Control.Try
+	f.Intrinsic.Control.If(v.Global.sSelectedProfile.Trim, =, "")
+		f.Intrinsic.Control.ExitSub
+	f.Intrinsic.Control.EndIf
+	
+	v.Local.sCurrentSelectedProfile.Set(v.Screen.F_InventoryExport!ddlProfile.Value)
+	f.Intrinsic.Control.If(v.Local.sCurrentSelectedProfile.Trim, =, v.Global.sSelectedProfile.Trim)
+		f.Intrinsic.Control.ExitSub
+	f.Intrinsic.Control.Else
+		f.Intrinsic.Control.CallSub(clearControls)
+		f.Intrinsic.Control.CallSub(loadProfile)
+		v.Global.sSelectedProfile.Set(v.Local.sCurrentSelectedProfile.Trim)
+	f.Intrinsic.Control.EndIf	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.ddlProfile_Click.End
+
+Program.Sub.cmdEnableExpCol_Click.Start
+f.Intrinsic.Control.Try
+	f.Intrinsic.Control.If(v.Screen.F_InventoryExport!txtExpCol1.Enabled)
+		gui.F_InventoryExport.cmdEnableExpCol.Caption("Activate Expression Columns")
+		
+		gui.F_InventoryExport.txtExpCol1.Enabled(False)
+		gui.F_InventoryExport.ddlExpCol1.Enabled(False)
+		
+		gui.F_InventoryExport.txtExpCol2.Enabled(False)
+		gui.F_InventoryExport.ddlExpCol2.Enabled(False)
+		
+		gui.F_InventoryExport.txtEC1.Enabled(False)
+		gui.F_InventoryExport.txtEC2.Enabled(False)
+	f.Intrinsic.Control.Else
+		gui.F_InventoryExport.cmdEnableExpCol.Caption("Deactivate Expression Columns")
+		
+		gui.F_InventoryExport.txtExpCol1.Enabled(True)
+		gui.F_InventoryExport.ddlExpCol1.Enabled(True)
+		
+		gui.F_InventoryExport.txtExpCol2.Enabled(True)
+		gui.F_InventoryExport.ddlExpCol2.Enabled(True)
+		
+		gui.F_InventoryExport.txtEC1.Enabled(True)
+		gui.F_InventoryExport.txtEC2.Enabled(True)
+		
+		f.Intrinsic.UI.Msgbox("Expression Columns needs a Global Shop set up. Please contact the Nesting Interface Team for further assistance.")
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.cmdEnableExpCol_Click.End
