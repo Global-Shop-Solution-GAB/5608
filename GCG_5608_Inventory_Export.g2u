@@ -1,0 +1,683 @@
+Program.Sub.Preflight.Start
+v.Global.sSingleSettingRet.Declare
+v.Global.sSettingListRet.Declare
+v.Global.sCodeSortClause.Declare
+v.Global.sPLClause.Declare
+v.Global.sUMClause.Declare
+v.Global.sFQP_File.Declare
+v.Global.bIncludeFieldTitles.Declare
+v.Global.iEC1_Map.Declare
+v.Global.iEC2_Map.Declare
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+f.Intrinsic.Control.Try
+
+	f.Intrinsic.Control.CallSub(checkCustomFolder)
+	f.Intrinsic.Control.SelectCase(v.Caller.Hook)
+		f.Intrinsic.Control.Case(38130)
+			f.Intrinsic.Control.CallSub(ScriptPIDCheck, Project, "GCG_5608", Task, "InvExport")
+			f.Intrinsic.Control.CallSub(brain)
+			f.Intrinsic.Control.CallSub(ScriptPIDClear, Project, "GCG_5608", Task, "InvExport")
+		f.Intrinsic.Control.CaseElse	
+			f.Intrinsic.Control.CallSub(brain)
+	f.Intrinsic.Control.EndSelect	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.ErrorMsg.Start
+v.Local.sError.Declare
+
+'Closes ODBC connection, default to connection : "con"
+f.Intrinsic.Control.If(v.ODBC!con.State, =, 1)
+	f.ODBC.Connection!con.Close
+f.Intrinsic.Control.EndIf
+
+'Generic Error message.
+f.Intrinsic.String.Build("Project GCG_5608_Inventory_Export.g2u {0}{0}Subroutine: {1}{0}Error: {2} with Description: {3}", v.Ambient.NewLine, v.Args.CurrentSub, v.Ambient.ErrorNumber, v.Ambient.ErrorDescription, v.Local.sError)
+f.Intrinsic.UI.Msgbox(v.Local.sError)
+Program.Sub.ErrorMsg.End
+
+Program.Sub.brain.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sSQL.Declare
+v.Local.sExtension.Declare
+v.Local.sTemp.Declare
+v.Local.iCnt.Declare
+
+'Load Options
+v.Local.sCodeSort.Declare
+v.Local.sExport_Names.Declare
+v.Local.sExport_Path.Declare
+v.Local.sExport_Type.Declare
+v.Local.sField_Map_Type.Declare
+v.Local.sFile_Name.Declare
+v.Local.sProduct_Line.Declare
+v.Local.sUnit_Measure.Declare
+v.Local.sStatic_Name.Declare
+v.Local.sUnattended_Export.Declare
+
+f.Intrinsic.Control.Try
+	f.Data.DataTable.Create("profilesDT", true)
+	f.Data.DataTable.AddColumn("profilesDT", "VALUE", "String")
+	
+	f.Intrinsic.Control.CallSub(readProfiles)
+	
+	f.Intrinsic.Control.For(v.Local.iCnt, 0, v.DataTable.profilesDT.RowCount--, 1)
+	
+		v.Local.sType.Set("LOAD_OPTION")
+	
+		v.Local.sProfile.Set(v.DataTable.profilesDT(v.Local.iCnt).Value!FieldValTrim)
+		v.Global.sCodeSortClause.Set("")
+		v.Global.sPLClause.Set("")
+		v.Global.bIncludeFieldTitles.Set(False)
+		
+		'CodeSort
+		v.Local.sSetting.Set("Code_Sort")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		v.Local.sCodeSort.Set(v.Global.sSingleSettingRet)
+		f.Intrinsic.Control.If(v.Local.sCodeSort.Trim, <>, "***BLANK***")
+		f.Intrinsic.Control.AndIf(v.Local.sCodeSort.Trim, <>, "")
+			f.Intrinsic.String.Build("Code_sort in ('{0}')", v.Local.sCodeSort.Trim, v.Global.sCodeSortClause)
+		f.Intrinsic.Control.EndIf
+
+		'Export_Names
+		v.Local.sSetting.Set("Export_Names")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		v.Local.sExport_Names.Set(v.Global.sSingleSettingRet)
+		f.Intrinsic.Control.If(v.Local.sExport_Names.Trim, =, "***YES***")
+			v.Global.bIncludeFieldTitles.Set(True)
+		f.Intrinsic.Control.EndIf
+
+		'Export_Path
+		v.Local.sSetting.Set("Export_Path")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		v.Local.sExport_Path.Set(v.Global.sSingleSettingRet)
+		
+		'Export_Type
+		v.Local.sSetting.Set("Export_Type")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		v.Local.sExport_Type.Set(v.Global.sSingleSettingRet)
+		f.Intrinsic.Control.If(v.Local.sExport_Type.Trim, =, "PEP")
+			v.Local.sExtension.Set(".csv")
+		f.Intrinsic.Control.EndIf
+		
+		'Field_Map_Type
+		v.Local.sSetting.Set("Field_Map_Type")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		v.Local.sField_Map_Type.Set(v.Global.sSingleSettingRet)
+		
+		'File_Name
+		v.Local.sSetting.Set("File_Name")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		v.Local.sFile_Name.Set(v.Global.sSingleSettingRet)
+		f.Intrinsic.String.Replace(v.Local.sFile_Name, "ttt", v.Caller.Terminal, v.Local.sFile_Name)
+		f.Intrinsic.String.Replace(v.Local.sFile_Name, "ppp",v.Local.sProfile, v.Local.sFile_Name)
+		f.Intrinsic.String.Replace(v.Local.sFile_Name, "ccc", v.Caller.CompanyCode, v.Local.sFile_Name)
+		
+		f.Intrinsic.String.Right(v.Local.sFile_Name.Trim, 4, v.Local.sTemp)
+		f.Intrinsic.Control.If(v.Local.sTemp.UCase, <>, ".CSV")
+			f.Intrinsic.String.Build("{0}{1}", v.Local.sFile_Name, v.Local.sExtension, v.Local.sFile_Name)
+		f.Intrinsic.Control.EndIf
+		
+		'Product_Line
+		v.Local.sSetting.Set("Product_Line")
+		f.Intrinsic.Control.CallSub(getSetting_DT, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		f.Data.DataView.Create("tmpValueDT", "tmpValueDV", 22)
+		f.Data.DataView.ToString("tmpValueDT", "tmpValueDV", "VALUE", "*!*", "','", v.Local.sProduct_Line)
+		f.Intrinsic.Control.If(v.Local.sProduct_Line.Trim, <>, "***BLANK***")
+		f.Intrinsic.Control.AndIf(v.Local.sProduct_Line.Trim, <>, "")
+			f.Intrinsic.String.Build("Product_Line in ('{0}')", v.Local.sProduct_Line.Trim, v.Global.sPLClause)
+		f.Intrinsic.Control.EndIf
+		f.Data.DataView.Close("tmpValueDT", "tmpValueDV")
+		
+		'Unit_Measure
+		v.Local.sSetting.Set("Unit_Measure")
+		f.Intrinsic.Control.CallSub(getSetting_DT, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		f.Data.DataView.Create("tmpValueDT", "tmpValueDV", 22)
+		f.Data.DataView.ToString("tmpValueDT", "tmpValueDV", "VALUE", "*!*", "','", v.Local.sUnit_Measure)
+		f.Intrinsic.Control.If(v.Local.sUnit_Measure.Trim, <>, "***BLANK***")
+		f.Intrinsic.Control.AndIf(v.Local.sUnit_Measure.Trim, <>, "")
+			f.Intrinsic.String.Build("UM_Inventory in ('{0}')", v.Local.sUnit_Measure.Trim, v.Global.sUMClause)
+		f.Intrinsic.Control.EndIf
+		f.Data.DataView.Close("tmpValueDT", "tmpValueDV")
+		
+		'Static_Name
+		v.Local.sSetting.Set("Static_Name")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		v.Local.sStatic_Name.Set(v.Global.sSingleSettingRet)
+		f.Intrinsic.Control.If(v.Local.sStatic_Name.Trim, =, "***YES***")
+			f.Intrinsic.String.Build("{0}{1}", v.Local.sExport_Path, v.Local.sFile_Name, v.Global.sFQP_File)
+		f.Intrinsic.Control.Else
+			f.Intrinsic.String.Build("{0}{1}_InvExport{2}{3}{4}", v.Local.sExport_Path, v.Local.sProfile.Trim, v.Caller.CompanyCode, v.Caller.Terminal, v.Local.sExtension, v.Global.sFQP_File)
+		f.Intrinsic.Control.EndIf
+		
+		'Unattended_Export
+		v.Local.sSetting.Set("Unattended_Export")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		v.Local.sUnattended_Export.Set(v.Global.sSingleSettingRet)
+		
+		'Exp Col
+		v.Local.sType.Set("Exp_Col")
+		'Exp Col 1 Map
+		v.Local.sSetting.Set("EC1_DT_MAP")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		f.Intrinsic.Control.If(v.Global.sSingleSettingRet.IsNumeric)
+			v.Global.iEC1_Map.Set(v.Global.sSingleSettingRet)
+		f.Intrinsic.Control.EndIf
+		
+		'Exp Col 2 Map
+		v.Local.sSetting.Set("EC2_DT_MAP")
+		f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+		f.Intrinsic.Control.If(v.Global.sSingleSettingRet.IsNumeric)
+			v.Global.iEC2_Map.Set(v.Global.sSingleSettingRet)
+		f.Intrinsic.Control.EndIf
+		
+		'createMappedDT
+		f.Intrinsic.Control.CallSub(createExportTable, passedProfile, v.Local.sProfile)
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+	
+	f.Intrinsic.Control.Catch
+		f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+	f.Intrinsic.Control.EndTry
+Program.Sub.brain.End
+
+Program.Sub.readProfiles.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sValue.Declare
+f.Intrinsic.Control.Try
+	'Get System Settings.
+	v.Local.sProfile.Set("GSS_SYSTEM")
+	v.Local.sType.Set("LOAD_OPTION")
+	v.Local.sSetting.Set("PROFILE")
+	f.Intrinsic.Control.CallSub(getSetting_DT, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sSetting)
+	
+	f.Data.DataTable.Merge("tmpValueDT", "profilesDT", false, 2)
+	f.Data.DataTable.Close("tmpValueDT")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.readProfiles.End
+
+Program.Sub.checkCustomFolder.Start
+v.Local.sFolder.Declare
+v.Local.bExists.Declare
+f.Intrinsic.Control.Try
+	f.Intrinsic.String.Build("{0}\CUSTOM\GCG_5608\", v.Caller.GlobalDir, v.Local.sFolder)
+	f.Intrinsic.File.DirExists(v.Local.sFolder, v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists.Not)
+		f.Intrinsic.File.CreateDir(v.Local.sFolder)
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.checkCustomFolder.End
+
+Program.Sub.saveSetting.Start
+'Call Statement
+'f.Intrinsic.Control.CallSub(saveSetting, passedProfile, "", passedType, "", passedSetting, "", passedValue, "")
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sValue.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	v.Local.sProfile.Set(v.Args.passedProfile)
+	v.Local.sType.Set(v.Args.passedType)
+	v.Local.sSetting.Set(v.Args.passedSetting)
+	v.Local.sValue.Set(v.Args.passedValue)
+
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select top 1 VALUE from GCG_5608_SETTINGS where PROFILE = '{0}' AND TYPE = '{1}' AND SETTING = '{2}'", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sRet)
+		
+		f.Intrinsic.Control.If(v.Local.sRet.Trim, =, "")
+			f.Intrinsic.String.Build("Insert into GCG_5608_SETTINGS (PROFILE, TYPE, SETTING, VALUE) Values ('{0}', '{1}', '{2}', '{3}')", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sValue, v.Local.sSQL)
+			f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		f.Intrinsic.Control.Else
+			f.Intrinsic.String.Build("Update GCG_5608_SETTINGS Set VALUE = '{0}' where PROFILE = '{1}' AND TYPE = '{2}' AND SETTING = '{3}'", v.Local.sValue, v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+			f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		f.Intrinsic.Control.EndIf
+	f.ODBC.Connection!con.Close	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.saveSetting.End
+
+Program.Sub.getSetting.Start
+'Call Statement
+'f.Intrinsic.Control.CallSub(getSetting, passedProfile, "", passedType, "", passedSetting, "")
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	v.Local.sProfile.Set(v.Args.passedProfile)
+	v.Local.sType.Set(v.Args.passedType)
+	v.Local.sSetting.Set(v.Args.passedSetting)
+
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select top 1 VALUE from GCG_5608_SETTINGS where PROFILE = '{0}' AND TYPE = '{1}' AND SETTING = '{2}'", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sRet)
+		
+		f.Intrinsic.Control.If(v.Local.sRet.Trim, =, "")
+			v.Global.sSingleSettingRet.Set("***BLANK***")
+		f.Intrinsic.Control.Else
+			v.Global.sSingleSettingRet.Set(v.Local.sRet)
+		f.Intrinsic.Control.EndIf
+	f.ODBC.Connection!con.Close	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.getSetting.End
+
+Program.Sub.saveSetting_DT.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+v.Local.sValue.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	v.Local.sProfile.Set(v.Args.passedProfile)
+	v.Local.sType.Set(v.Args.passedType)
+	v.Local.sSetting.Set(v.Args.passedSetting)
+	v.Local.sValue.Set(v.Args.passedValue)
+	
+	f.Data.DataTable.AddColumn(v.Local.sValue, "PROFILE", "String", v.Local.sProfile)
+	f.Data.DataTable.AddColumn(v.Local.sValue, "TYPE", "String", v.Local.sType)
+	f.Data.DataTable.AddColumn(v.Local.sValue, "SETTING", "String", v.Local.sSetting)
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Delete from GCG_5608_SETTINGS where PROFILE = '{0}' AND TYPE = '{1}' AND SETTING = '{2}'", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)
+		
+		f.Data.DataTable.SaveToDB(v.Local.sValue, "con", "GCG_5608_SETTINGS", "PROFILE*!*TYPE*!*SETTING*!*VALUE", 256)
+	f.ODBC.Connection!con.Close	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.saveSetting_DT.End
+
+Program.Sub.getSetting_DT.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSetting.Declare
+'v.Local.sValue.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+f.Intrinsic.Control.Try
+	v.Local.sProfile.Set(v.Args.passedProfile)
+	v.Local.sType.Set(v.Args.passedType)
+	v.Local.sSetting.Set(v.Args.passedSetting)
+	'v.Local.sValue.Set(v.Args.passedValue)
+	
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select RTRIM(VALUE) as VALUE from GCG_5608_SETTINGS where PROFILE = '{0}' AND TYPE = '{1}' AND SETTING = '{2}'", v.Local.sProfile, v.Local.sType, v.Local.sSetting, v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL, v.Local.sRet)
+		
+		f.Intrinsic.Control.If(v.DataTable.tmpValueDT.Exists)
+			f.Data.DataTable.Close("tmpValueDT")
+		f.Intrinsic.Control.EndIf
+		f.Data.DataTable.CreateFromSQL("tmpValueDT", "con", v.Local.sSQL, true)
+		
+		f.Intrinsic.Control.If(v.Local.sRet.Trim, =, "")
+			v.Global.sSettingListRet.Set("***BLANK***")
+		f.Intrinsic.Control.Else
+			v.Global.sSettingListRet.Set(v.Local.sRet)
+		f.Intrinsic.Control.EndIf
+	f.ODBC.Connection!con.Close	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.getSetting_DT.End
+
+
+Program.Sub.createExportTable.Start
+v.Local.sProfile.Declare
+v.Local.sType.Declare
+v.Local.sSQL.Declare
+v.Local.sFilter.Declare
+v.Local.iCnt.Declare
+v.Local.sTemp.Declare
+
+v.Local.sFileTitle.Declare
+v.Local.iFileIndex.Declare
+v.Local.sGSS_Name.Declare
+v.Local.sField_Index.Declare
+v.Local.iTable_Index.Declare
+
+v.Local.sDefaultValue.Declare
+
+v.Local.sSQL_Datatable.Declare
+v.Local.sSQL_Titles.Declare
+v.Local.iSQL_Ubound.Declare
+v.Local.sSQL_WhereClause.Declare
+v.Local.sTable_Name.Declare
+v.Local.sTable_Key.Declare
+
+v.Local.sExportFieldTitles.Declare
+v.Local.sRet.Declare
+
+v.Local.sExpressionCol.Declare
+v.Local.sExpressionCol.Redim(0,1)
+
+v.Local.sExpressionColName.Declare
+v.Local.sExpressionColName.Redim(0,1)
+
+v.Local.sExpressionType.Declare
+v.Local.sExpressionType.Redim(0,1)
+
+f.Intrinsic.Control.Try
+	v.Local.sProfile.Set(v.Args.passedProfile)
+	
+	f.Intrinsic.Control.If(v.Global.sCodeSortClause.Trim, <>, "")
+		f.Intrinsic.String.Build("where {0}", v.Global.sCodeSortClause, v.Local.sSQL_WhereClause)
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.If(v.Global.sPLClause.Trim, <>, "")
+		f.Intrinsic.Control.If(v.Local.sSQL_WhereClause.Trim, =, "")
+			f.Intrinsic.String.Build("where {0}", v.Global.sPLClause, v.Local.sSQL_WhereClause)
+		f.Intrinsic.Control.Else
+			f.Intrinsic.String.Build("{0} and {1}", v.Local.sSQL_WhereClause, v.Global.sPLClause, v.Local.sSQL_WhereClause)
+		f.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.If(v.Global.sUMClause.Trim, <>, "")
+		f.Intrinsic.Control.If(v.Local.sSQL_WhereClause.Trim, =, "")
+			f.Intrinsic.String.Build("where {0}", v.Global.sUMClause, v.Local.sSQL_WhereClause)
+		f.Intrinsic.Control.Else
+			f.Intrinsic.String.Build("{0} and {1}", v.Local.sSQL_WhereClause, v.Global.sUMClause, v.Local.sSQL_WhereClause)
+		f.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.If(v.Local.sSQL_WhereClause.Trim, <>, "")
+		f.Intrinsic.String.Build("where PART+LOCATION in (Select PART+LOCATION from V_INVENTORY_ALL {0})", v.Local.sSQL_WhereClause, v.Local.sSQL_WhereClause)
+	f.Intrinsic.Control.EndIf
+
+	'f.Intrinsic.String.Replace(v.Local.sSQL_WhereClause, ",", "','", v.Local.sSQL_WhereClause)
+		
+	f.Intrinsic.Control.If(v.DataTable.mapDT.Exists)
+		f.Data.DataTable.Close("mapDT")
+	f.Intrinsic.Control.EndIf
+	
+	f.Data.DataTable.Create("mapDT", true)
+	f.Data.DataTable.AddColumn("mapDT", "table_key", "String")
+	
+	f.ODBC.Connection!con.OpenCompanyConnection
+		f.Intrinsic.String.Build("Select * from GCG_5608_MAPPING where PROFILE = '{0}' order by File_Index", v.Local.sProfile, v.Local.sSQL)
+		f.Data.DataTable.CreateFromSQL("mappingDT", "con", v.Local.sSQL)
+		f.Data.DataTable.CreateFromSQL("gssLegendsDT", "con", "Select * from GCG_5608_TABLE_FIELD order by Table_Index, Field_Index asc")
+		f.ODBC.Connection!con.ExecuteAndReturn("select max(Table_index) from GCG_5608_MAPPING", v.Local.iSQL_Ubound)
+		f.Intrinsic.String.Build("Select distinct Table_Index from GCG_5608_MAPPING where Profile = '{0}' order by Table_Index asc", v.Local.sProfile, v.Local.sSQL)
+		f.Data.DataTable.CreateFromSQL("mappingTableIndexDT", "con", v.Local.sSQL)
+		f.Data.DataTable.CreateFromSQL("tableMapDT", "con", "Select * from GCG_5608_TABLE_MAP order by Table_Index asc")
+	f.ODBC.Connection!con.Close
+	
+	v.Local.sSQL_Datatable.Redim(0, v.Local.iSQL_Ubound)
+	v.Local.sSQL_Titles.Redim(0, v.Local.iSQL_Ubound)
+	f.Data.DataView.Create("tableMapDT", "tableMapDV", 22)
+	
+	f.Intrinsic.Control.For(v.Local.iCnt, 0, v.DataTable.mappingDT.RowCount--, 1)
+		v.Local.sFileTitle.Set(v.DataTable.mappingDT(v.Local.iCnt).File_Title!FieldValTrim)
+		v.Local.iFileIndex.Set(v.DataTable.mappingDT(v.Local.iCnt).File_Index!FieldVal)
+		v.Local.sGSS_Name.Set(v.DataTable.mappingDT(v.Local.iCnt).GSS_Name!FieldValTrim)
+		v.Local.sField_Index.Set(v.DataTable.mappingDT(v.Local.iCnt).Field_Index!FieldValTrim)
+		v.Local.iTable_Index.Set(v.DataTable.mappingDT(v.Local.iCnt).Table_Index!FieldVal)
+		
+		f.Intrinsic.Control.If(v.Local.sExportFieldTitles.Trim, =, "")
+			v.Local.sExportFieldTitles.Set(v.Local.sFileTitle)
+		f.Intrinsic.Control.Else
+			f.Intrinsic.String.Build("{0}*!*{1}", v.Local.sExportFieldTitles, v.Local.sFileTitle, v.Local.sExportFieldTitles)
+		f.Intrinsic.Control.EndIf
+
+		f.Intrinsic.Control.If(v.Local.iTable_Index, =, 0)
+			f.Intrinsic.Control.If(v.Local.sField_Index.Trim, <>, "NA")
+			
+				f.Intrinsic.Control.If(v.Local.sField_Index.Trim, =, "EC1")
+					'Export_Column_1
+					v.Local.sType.Set("Exp_Col")
+					v.Local.sExpressionColName(0).Set(v.Local.sFileTitle)
+					'Column Expression
+					f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sGSS_Name)
+					v.Local.sExpressionCol(0).Set(v.Global.sSingleSettingRet)
+					'Expression Type
+					f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, "Exp_Col_1_Type")
+					v.Local.sExpressionType(0).Set(v.Global.sSingleSettingRet)
+					'
+					f.Data.DataTable.AddColumn("mapDT", v.Local.sExpressionColName(0), "String", "")
+				f.Intrinsic.Control.ElseIf(v.Local.sField_Index.Trim, =, "EC2")
+					'Export_Column_2
+					v.Local.sType.Set("Exp_Col")
+					v.Local.sExpressionColName(1).Set(v.Local.sFileTitle)
+					'Column Expression
+					f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sGSS_Name)
+					v.Local.sExpressionCol(1).Set(v.Global.sSingleSettingRet)
+					'Expression Type
+					f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, "Exp_Col_2_Type")
+					v.Local.sExpressionType(1).Set(v.Global.sSingleSettingRet)
+					'
+					f.Data.DataTable.AddColumn("mapDT", v.Local.sExpressionColName(1), "String", "")
+				f.Intrinsic.Control.Else				
+					'Static_Field
+					v.Local.sType.Set("Static_Field")
+					f.Intrinsic.Control.CallSub(getSetting, passedProfile, v.Local.sProfile, passedType, v.Local.sType, passedSetting, v.Local.sGSS_Name)
+					v.Local.sDefaultValue.Set(v.Global.sSingleSettingRet)
+					f.Intrinsic.Control.If(v.Local.sDefaultValue.Trim, =, "***BLANK***")
+						v.Local.sDefaultValue.Set("")
+					f.Intrinsic.Control.EndIf
+								
+					f.Data.DataTable.AddColumn("mapDT", v.Local.sFileTitle, "String", v.Local.sDefaultValue)
+					
+					f.Intrinsic.Control.If(v.Local.sSQL_Titles(v.Local.iTable_Index).Trim, =, "")
+						v.Local.sSQL_Titles(v.Local.iTable_Index).Set(v.Local.sFileTitle)
+					f.Intrinsic.Control.Else
+						f.Intrinsic.String.Build("{0},{1}", v.Local.sSQL_Titles(v.Local.iTable_Index), v.Local.sFileTitle, v.Local.sSQL_Titles(v.Local.iTable_Index))
+					f.Intrinsic.Control.EndIf
+				f.Intrinsic.Control.EndIf
+				
+			f.Intrinsic.Control.Else
+				f.Data.DataTable.AddColumn("mapDT", v.Local.sFileTitle, "String", "")
+			f.Intrinsic.Control.EndIf
+		f.Intrinsic.Control.Else
+			f.Data.DataTable.AddColumn("mapDT", v.Local.sFileTitle, "String")
+			f.Intrinsic.Control.If(v.Local.sSQL_Datatable(v.Local.iTable_Index).Trim, =, "")
+				f.Intrinsic.String.Build("{0} as {1}", v.Local.sGSS_Name, v.Local.sFileTitle, v.Local.sSQL_Datatable(v.Local.iTable_Index))				
+			f.Intrinsic.Control.Else				
+				f.Intrinsic.String.Build("{0}, {1} as {2}", v.Local.sSQL_Datatable(v.Local.iTable_Index), v.Local.sGSS_Name, v.Local.sFileTitle, v.Local.sSQL_Datatable(v.Local.iTable_Index))
+			f.Intrinsic.Control.EndIf
+			
+			f.Intrinsic.Control.If(v.Local.sSQL_Titles(v.Local.iTable_Index).Trim, =, "")
+				v.Local.sSQL_Titles(v.Local.iTable_Index).Set(v.Local.sFileTitle)
+			f.Intrinsic.Control.Else
+				f.Intrinsic.String.Build("{0},{1}", v.Local.sSQL_Titles(v.Local.iTable_Index), v.Local.sFileTitle, v.Local.sSQL_Titles(v.Local.iTable_Index))
+			f.Intrinsic.Control.EndIf
+		f.Intrinsic.Control.EndIf				
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+
+	
+	'v.Local.iCnt.Set(1)
+	f.Intrinsic.Control.If(v.DataTable.mappingTableIndexDT.RowCount, >, 1)
+	
+		f.Intrinsic.Control.For(v.Local.iCnt, 1, v.DataTable.mappingTableIndexDT.RowCount--, 1)
+			v.Local.iTable_Index.Set(v.DataTable.mappingTableIndexDT(v.Local.iCnt).Table_Index!FieldVal)
+			f.Intrinsic.String.Build("Table_Index = {0}", v.Local.iTable_Index, v.Local.sFilter)
+			f.Data.DataView.SetFilter("tableMapDT", "tableMapDV", v.Local.sFilter)
+			f.Intrinsic.Control.If(v.DataView.tableMapDT!tableMapDV.RowCount, =, 1)
+				v.Local.sTable_Name.Set(v.DataView.tableMapDT!tableMapDV(0).Table_Name!FieldValTrim)
+				v.Local.sTable_Key.Set(v.DataView.tableMapDT!tableMapDV(0).Table_Key!FieldValTrim)
+				'WHERE CLAUSE********************************************************************************
+				f.ODBC.Connection!con.OpenCompanyConnection
+					f.Intrinsic.String.Build("Select {0} as table_key, {1} from {2}", v.Local.sTable_Key, v.Local.sSQL_Datatable(v.Local.iTable_Index), v.Local.sTable_Name, v.Local.sSQL)
+					f.Intrinsic.Control.If(v.Local.sSQL_WhereClause.Trim, <>, "")
+						f.Intrinsic.String.Build("{0} {1}", v.Local.sSQL, v.Local.sSQL_WhereClause, v.Local.sSQL)
+					f.Intrinsic.Control.EndIf
+					f.Data.DataTable.CreateFromSQL("gssMappedDT", "con", v.Local.sSQL)
+				f.ODBC.Connection!con.Close
+					f.Intrinsic.Control.If(v.Global.iEC1_Map, =, v.Local.iCnt)
+						f.Intrinsic.Control.If(v.Local.sExpressionCol(0).Trim, <>, "")
+						f.Intrinsic.Control.AndIf(v.Local.sExpressionType(0).Trim, <>, "")
+							f.Data.DataTable.AddExpressionColumn("gssMappedDT", v.Local.sExpressionColName(0), v.Local.sExpressionType(0), v.Local.sExpressionCol(0))
+						f.Intrinsic.Control.EndIf
+					f.Intrinsic.Control.EndIf
+					
+					f.Intrinsic.Control.If(v.Global.iEC2_Map, =, v.Local.iCnt)
+						f.Intrinsic.Control.If(v.Local.sExpressionCol(1).Trim, <>, "")
+						f.Intrinsic.Control.AndIf(v.Local.sExpressionType(1).Trim, <>, "")
+							f.Data.DataTable.AddExpressionColumn("gssMappedDT", v.Local.sExpressionColName(1), v.Local.sExpressionType(1), v.Local.sExpressionCol(1))
+						f.Intrinsic.Control.EndIf
+					f.Intrinsic.Control.EndIf
+		
+				f.Intrinsic.Control.If(v.Local.iCnt, =, 1)
+					f.Data.DataTable.Merge("gssMappedDT", "mapDT", false, 2)
+					f.Data.DataTable.Close("gssMappedDT")
+					
+					f.Intrinsic.Control.If(v.Local.sExpressionType(0).Trim, =, "FLOAT")
+						f.Data.DataTable.SetValueFormat("mapDT", -1, v.Local.sExpressionColName(0), v.Local.sExpressionColName(0), "0.00")
+					f.Intrinsic.Control.EndIf
+					
+					f.Intrinsic.Control.If(v.Local.sExpressionType(1).Trim, =, "FLOAT")
+						f.Data.DataTable.SetValueFormat("mapDT", -1, v.Local.sExpressionColName(1), v.Local.sExpressionColName(1), "0.00")
+					f.Intrinsic.Control.EndIf
+				f.Intrinsic.Control.ElseIf(v.Local.iCnt, >, 1)
+					'START FROM HERE SECOND TABLE.
+					v.Local.sTemp.Set(v.DataTable.mapDT.FieldNames)
+					
+				f.Intrinsic.Control.EndIf
+				
+			f.Intrinsic.Control.EndIf
+		f.Intrinsic.Control.Next(v.Local.iCnt)
+		
+		f.Data.DataView.Create("mapDT", "mapDV", 22)
+		f.Data.DataView.ToString("mapDT", "mapDV", v.Local.sExportFieldTitles, ",", v.Ambient.NewLine, v.Local.sRet)
+		
+		f.Intrinsic.String.Replace(v.Local.sExportFieldTitles, "*!*", ",", v.Local.sExportFieldTitles)
+		f.Intrinsic.Control.If(v.Global.bIncludeFieldTitles)
+			f.Intrinsic.String.Build("{0}{1}{2}", v.Local.sExportFieldTitles, v.Ambient.NewLine, v.Local.sRet, v.Local.sRet)
+		f.Intrinsic.Control.EndIf
+		
+		f.Intrinsic.File.String2File(v.Global.sFQP_File, v.Local.sRet)
+		f.Data.DataView.Close("mapDT", "mapDV")
+	f.Intrinsic.Control.EndIf
+
+	f.Data.DataTable.Close("mapDT")
+	f.Data.DataTable.Close("mappingDT")
+	f.Data.DataTable.Close("gssLegendsDT")
+	f.Data.DataTable.Close("mappingTableIndexDT")
+	f.Data.DataView.Close("tableMapDT", "tableMapDV")
+	f.Data.DataTable.Close("tableMapDT")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.createExportTable.End
+
+Program.Sub.ScriptPIDCheck.Start
+'check if the process is already running
+'store PID in a text file
+'Pass PROJECT (folder to store in), TASK (what to name text file)
+
+F.Intrinsic.Control.Try
+V.Local.bExists.Declare(Boolean)
+V.Local.sDir.Declare(String)
+V.Local.sCurrentPIDProcess.Declare(String)
+V.Local.sFile.Declare(String)
+V.Local.sProject.Declare(String)
+V.Local.sTask.Declare(String)
+v.Local.sTimeLastRun.Declare
+
+V.Local.sProject.Set(V.Args.Project)
+V.Local.sTask.Set(V.Args.Task)
+
+v.Local.dReadDate.Declare
+v.Local.dCurrentDate.Declare
+
+	F.Intrinsic.String.Build("{0}\Custom\{1}", V.Caller.GlobalDir, V.Local.sProject, V.Local.sDir)
+	'F.Intrinsic.Control.CallSub(CheckDirectory, "Path", V.Local.sDir)
+	
+	F.Intrinsic.String.Build("{0}\{1}_Running.txt", V.Local.sDir, V.Local.sTask, V.Local.sFile)
+	F.Intrinsic.File.Exists(V.Local.sFile, V.Local.bExists)
+	
+	F.Intrinsic.Control.If(V.Local.bExists.Not)
+		'program is not running
+		'Create Program Status file to let it know its running
+		F.Intrinsic.File.String2File(V.Local.sFile, V.Ambient.PID)
+	F.Intrinsic.Control.Else
+	 	'then the file exists: get the PID from the file to see if the process is still running
+		F.Intrinsic.File.File2String(V.Local.sFile, V.Local.sCurrentPIDProcess)
+		F.Intrinsic.Task.PIDRunning(V.Local.sCurrentPIDProcess, V.Local.bExists)
+		F.Intrinsic.Control.If(V.Local.bExists)
+			'the the program is running- don't start new process
+			F.Intrinsic.Control.End
+		F.Intrinsic.Control.Else
+			'the program has stopped, but did not delete the file. Delete the file and create a new file for current run
+			F.Intrinsic.File.DeleteFile(V.Local.sFile)
+			F.Intrinsic.File.String2File(V.Local.sFile, V.Ambient.PID)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+	'**********************************************************************************Check Last time it ran
+	F.Intrinsic.String.Build("{0}\{1}_LastRun.txt", V.Local.sDir, V.Local.sTask, V.Local.sFile)
+	F.Intrinsic.File.Exists(V.Local.sFile, V.Local.bExists)
+	
+	F.Intrinsic.Control.If(V.Local.bExists.Not)
+		'program is not running
+		'Create Program Status file to let it know its running
+		f.Intrinsic.Date.CombineDateTime(v.Ambient.Date, v.Ambient.Time, v.Local.dCurrentDate)
+		F.Intrinsic.File.String2File(V.Local.sFile, v.Local.dCurrentDate)
+	F.Intrinsic.Control.Else
+	 	'then the file exists: get the PID from the file to see if the process is still running
+		F.Intrinsic.File.File2String(V.Local.sFile, V.Local.sTimeLastRun)
+		'F.Intrinsic.Task.PIDRunning(V.Local.sTimeLastRun, V.Local.bExists)
+		f.Intrinsic.Date.CombineDateTime(v.Ambient.Date, v.Ambient.Time, v.Local.dCurrentDate)
+		
+		f.Intrinsic.Date.DateAdd(H, 0, v.Local.sTimeLastRun.Trim, v.Local.dReadDate)
+		f.Intrinsic.Date.DateAdd(N, -30, v.Local.dCurrentDate, v.Local.dCurrentDate)
+		f.Intrinsic.Control.If(v.Local.dCurrentDate, <, v.Local.dReadDate)
+			f.Intrinsic.Control.End
+		f.Intrinsic.Control.EndIf
+		f.Intrinsic.Date.CombineDateTime(v.Ambient.Date, v.Ambient.Time, v.Local.dCurrentDate)
+		F.Intrinsic.File.String2File(V.Local.sFile, v.Local.dCurrentDate)
+	F.Intrinsic.Control.EndIf
+
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.ScriptPIDCheck.End
+
+Program.Sub.ScriptPIDClear.Start
+'delete the is running file, so the next time the program runs it knows it isn't currently running
+'Pass PROJECT (folder to store in), TASK (what to name text file)
+
+F.Intrinsic.Control.Try
+
+V.Local.bExists.Declare(Boolean)
+V.Local.sDir.Declare(String)
+V.Local.sFile.Declare(String)
+V.Local.sProject.Declare(String)
+V.Local.sTask.Declare(String)
+
+V.Local.sProject.Set(V.Args.Project)
+V.Local.sTask.Set(V.Args.Task)
+
+F.Intrinsic.String.Build("{0}\Custom\{1}\", V.Caller.GlobalDir, V.Local.sProject, V.Local.sDir)
+'F.Intrinsic.Control.CallSub(CheckDirectory, "Path", V.Local.sDir)
+
+F.Intrinsic.String.Build("{0}\{1}_Running.txt", V.Local.sDir, V.Local.sTask, V.Local.sFile)
+F.Intrinsic.File.Exists(V.Local.sFile, V.Local.bExists)
+
+F.Intrinsic.Control.If(V.Local.bExists)
+	F.Intrinsic.File.DeleteFile(V.Local.sFile)
+F.Intrinsic.Control.EndIf
+
+f.Intrinsic.Control.Catch
+	f.Intrinsic.Control.CallSub(ErrorMsg, CurrentSub, v.Ambient.CurrentSubroutine)
+f.Intrinsic.Control.EndTry
+Program.Sub.ScriptPIDClear.End
+
+
